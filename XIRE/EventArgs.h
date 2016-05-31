@@ -26,7 +26,7 @@ public:
 
 	~EventArgs()
 	{
-		SafeDelete(Data);
+		//SafeDelete(Data);
 	}
 
 	T *Data;
