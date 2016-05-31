@@ -54,7 +54,7 @@ void Window::OnRender()
 	{
 		WindowRender(this, NULL);
 	}
-	return;
+	
 	g->EndFrame(); 
 
 	g->Swap();
