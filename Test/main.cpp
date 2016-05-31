@@ -80,7 +80,7 @@ GameAppDelegate::~GameAppDelegate()
 void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, AppStartupEventArgs e)
 { 
 	//test for resource loading
-	mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/head.obj"));
+	mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
 	XIRE::Application *app = (XIRE::Application*)sender;
 	app->GetMainWindow()->AddDrawable(mesh);
 }
