@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="EventListener.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventArgs.h" />
+    <ClInclude Include="RenderBase.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftwareDriver.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftwareRasterizer.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="XIRE_Afx.h" />
+    <ClInclude Include="XIRE_Cfg.h" />
+    <ClInclude Include="XIRE.h" />
+    <ClInclude Include="ObjLoader.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Memfile.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Const.hpp" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="Graphics.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="SwSurface.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Root.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="Vectorf2.hpp">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vectori2.hpp">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vectorf3.hpp">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixSIMD.hpp">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrixf33.hpp">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftShader.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="Matrixf44.h">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vectorf4.h">
+      <Filter>core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SwRenderPrimitive.hpp">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h" />
+    <ClInclude Include="Transform.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="EventListener.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventArgs.cpp" />
+    <ClCompile Include="SoftwareDriver.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftwareRasterizer.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SwSurface.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="Root.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftShader.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="Matrixf44.cpp">
+      <Filter>core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4f.cpp">
+      <Filter>core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp" />
+    <ClCompile Include="Transform.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{87c262c8-bd5f-4f40-8c67-a642e4cf9345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\d3d12">
+      <UniqueIdentifier>{74abfe76-5b5c-4ac4-8b0c-d3c61d42043e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\d3d11">
+      <UniqueIdentifier>{e5125d96-97f3-463f-b39a-dc13da2f31b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\vulkan">
+      <UniqueIdentifier>{94b4b0f5-ce48-49b0-9998-6306f4fd0bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\opengl">
+      <UniqueIdentifier>{81c3fbd8-c09c-4e6a-9cd2-47a2fdfbc60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\d3d10">
+      <UniqueIdentifier>{30788eec-b87a-4f59-b67a-7848b2e3255d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\d3d9">
+      <UniqueIdentifier>{9855c86a-0996-46da-8082-0930a4321aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{7aa9fa8e-ee30-4a0c-b8a0-8392f34ad872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\software">
+      <UniqueIdentifier>{49410282-8147-4e69-b9f9-011835ad6978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\math">
+      <UniqueIdentifier>{77a9a174-2878-4654-b225-397d0cc0c667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{2007d934-e6d3-4679-94ca-3431fb25e07e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
