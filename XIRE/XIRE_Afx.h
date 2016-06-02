@@ -39,8 +39,8 @@ typedef std::string String;
 
 NS_End(XIRE)
 
-#define MakeCCallback2(callback) std::bind(##callback##, this, std::placeholders::_1, std::placeholders::_2) 
-#define MakeCallback2(callback) std::bind(##callback##,std::placeholders::_1, std::placeholders::_2)
+#define CCallback2(callback) std::bind(##callback##, this, std::placeholders::_1, std::placeholders::_2) 
+#define SCallback2(callback) std::bind(##callback##,std::placeholders::_1, std::placeholders::_2)
 
 #define SafeDelete(l) {if((l)!=NULL){delete (l);(l)=NULL;}}
 #define SafeRelease(l) {if((l)!=NULL){(l)->Release();(l)=NULL;}}

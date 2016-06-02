@@ -54,8 +54,8 @@ HINSTANCE Application::GetAppHandle()
 
 void Application::AddWindow(Window* window)
 { 
-	window->WindowRender += MakeCCallback2(&Application::OnWindowRender);
-	window->WindowClosed += MakeCCallback2(&Application::OnWindowClosed);
+	window->WindowRender += CCallback2(&Application::OnWindowRender);
+	window->WindowClosed += CCallback2(&Application::OnWindowClosed);
 	window->Show();
 
 	windows.push_back(window);

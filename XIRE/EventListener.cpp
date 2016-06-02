@@ -6,38 +6,38 @@ NS_Using(XIRE)
 EventListener::EventListener(void *parent)
 	:Root(parent)
 {
-	MouseLeftButtonDown += MakeCCallback2(&EventListener::onMouseLeftButtonDown);
-	MouseLeftButtonUp += MakeCCallback2(&EventListener::onMouseLeftButtonUp);
-	MouseLeftButtonDoubleClick += MakeCCallback2(&EventListener::onMouseLeftButtonDoubleClick);
-	MouseMiddleButtonDown += MakeCCallback2(&EventListener::onMouseMiddleButtonDown);
-	MouseMiddleButtonUp += MakeCCallback2(&EventListener::onMouseMiddleButtonUp);
-	MouseRightButtonDown += MakeCCallback2(&EventListener::onMouseRightButtonDown);
-	MouseRightButtonUp += MakeCCallback2(&EventListener::onMouseRightButtonUp);
-	MouseRightButtonDoubleClick += MakeCCallback2(&EventListener::onMouseRightButtonDoubleClick);
-	MouseEnter += MakeCCallback2(&EventListener::onMouseEnter);
-	MouseLeave += MakeCCallback2(&EventListener::onMouseLeave);
-	MouseMove += MakeCCallback2(&EventListener::onMouseMove);
-	MouseWheel += MakeCCallback2(&EventListener::onMouseWheel);
-	KeyDown +=						MakeCCallback2(&EventListener::onKeyDown);
-	KeyUp +=						MakeCCallback2(&EventListener::onKeyUp);
+	MouseLeftButtonDown += CCallback2(&EventListener::onMouseLeftButtonDown);
+	MouseLeftButtonUp += CCallback2(&EventListener::onMouseLeftButtonUp);
+	MouseLeftButtonDoubleClick += CCallback2(&EventListener::onMouseLeftButtonDoubleClick);
+	MouseMiddleButtonDown += CCallback2(&EventListener::onMouseMiddleButtonDown);
+	MouseMiddleButtonUp += CCallback2(&EventListener::onMouseMiddleButtonUp);
+	MouseRightButtonDown += CCallback2(&EventListener::onMouseRightButtonDown);
+	MouseRightButtonUp += CCallback2(&EventListener::onMouseRightButtonUp);
+	MouseRightButtonDoubleClick += CCallback2(&EventListener::onMouseRightButtonDoubleClick);
+	MouseEnter += CCallback2(&EventListener::onMouseEnter);
+	MouseLeave += CCallback2(&EventListener::onMouseLeave);
+	MouseMove += CCallback2(&EventListener::onMouseMove);
+	MouseWheel += CCallback2(&EventListener::onMouseWheel);
+	KeyDown +=						CCallback2(&EventListener::onKeyDown);
+	KeyUp +=						CCallback2(&EventListener::onKeyUp);
 }
 
 EventListener::~EventListener()
 { 
-	MouseLeftButtonDown -= MakeCCallback2(&EventListener::onMouseLeftButtonDown);
-	MouseLeftButtonUp -= MakeCCallback2(&EventListener::onMouseLeftButtonUp);
-	MouseLeftButtonDoubleClick -= MakeCCallback2(&EventListener::onMouseLeftButtonDoubleClick);
-	MouseMiddleButtonDown -= MakeCCallback2(&EventListener::onMouseMiddleButtonDown);
-	MouseMiddleButtonUp -= MakeCCallback2(&EventListener::onMouseMiddleButtonUp);
-	MouseRightButtonDown -= MakeCCallback2(&EventListener::onMouseRightButtonDown);
-	MouseRightButtonUp -= MakeCCallback2(&EventListener::onMouseRightButtonUp);
-	MouseRightButtonDoubleClick -= MakeCCallback2(&EventListener::onMouseRightButtonDoubleClick);
-	MouseEnter -= MakeCCallback2(&EventListener::onMouseEnter);
-	MouseLeave -= MakeCCallback2(&EventListener::onMouseLeave);
-	MouseMove -= MakeCCallback2(&EventListener::onMouseMove);
-	MouseWheel -= MakeCCallback2(&EventListener::onMouseWheel);
-	KeyDown -= MakeCCallback2(&EventListener::onKeyDown);
-	KeyUp -= MakeCCallback2(&EventListener::onKeyUp);
+	MouseLeftButtonDown -= CCallback2(&EventListener::onMouseLeftButtonDown);
+	MouseLeftButtonUp -= CCallback2(&EventListener::onMouseLeftButtonUp);
+	MouseLeftButtonDoubleClick -= CCallback2(&EventListener::onMouseLeftButtonDoubleClick);
+	MouseMiddleButtonDown -= CCallback2(&EventListener::onMouseMiddleButtonDown);
+	MouseMiddleButtonUp -= CCallback2(&EventListener::onMouseMiddleButtonUp);
+	MouseRightButtonDown -= CCallback2(&EventListener::onMouseRightButtonDown);
+	MouseRightButtonUp -= CCallback2(&EventListener::onMouseRightButtonUp);
+	MouseRightButtonDoubleClick -= CCallback2(&EventListener::onMouseRightButtonDoubleClick);
+	MouseEnter -= CCallback2(&EventListener::onMouseEnter);
+	MouseLeave -= CCallback2(&EventListener::onMouseLeave);
+	MouseMove -= CCallback2(&EventListener::onMouseMove);
+	MouseWheel -= CCallback2(&EventListener::onMouseWheel);
+	KeyDown -= CCallback2(&EventListener::onKeyDown);
+	KeyUp -= CCallback2(&EventListener::onKeyUp);
 }
 	
 void EventListener::RegisterEventListener(const U32& type)

@@ -69,10 +69,10 @@ GameAppDelegate::GameAppDelegate()
 {
 	app = new XIRE::Application();
 
-	app->ApplicationInitialized += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
-	app->ApplicationRender += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
+	app->ApplicationInitialized += CCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
+	app->ApplicationRender += CCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
   
-	//app.GetMainWindow()->WindowRender += MakeCCallback2(&GameAppDelegate::GameApp_OnWindowRender);
+	//app.GetMainWindow()->WindowRender += CCallback2(&GameAppDelegate::GameApp_OnWindowRender);
  	
 	app->Run();
 }
@@ -88,7 +88,7 @@ void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, Application
 	XIRE::SwMesh *mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
 	XIRE::SwMesh *mesh2 = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/head.obj"));
 	
-	mesh->KeyDown += MakeCCallback2(&GameAppDelegate::GameApp_OnMeshKeyDown);
+	mesh->KeyDown += CCallback2(&GameAppDelegate::GameApp_OnMeshKeyDown);
 
 	XIRE::Application *app = (XIRE::Application*)sender;
 
