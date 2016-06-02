@@ -19,7 +19,7 @@ public:
 
 		XIRE_ALIGN struct { float x, y, z, w; };
 #ifdef SR_COLOR_RGBA
-		SR_ALIGN struct { float r, g, b, a; };
+		XIRE_ALIGN struct { float r, g, b, a; };
 #else
 		XIRE_ALIGN struct { float a, r, g, b; };
 #endif

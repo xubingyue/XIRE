@@ -4,6 +4,7 @@
 #include "EventListener.h"
 #include "Vectorf3.hpp"
 #include "Matrixf44.h"
+#include "Quaternion.h"
 
 NS_Begin(XIRE) 
 
@@ -18,8 +19,9 @@ public:
 
 public:
 
-	Camera(void *parent,const core::Vectorf3 &pos = core::Vectorf3(0.f, 0.f, 0.f),
-		const core::Vectorf3 &lookat = core::Vectorf3(0.f, 0.f, 1.f),
+	Camera(void *parent,const core::Vectorf3 &pos,
+		/*const core::Vectorf3 &lookat = core::Vectorf3(0.f, 0.f, 1.f),*/
+		const core::Quaternion &rot,
 		const core::Vectorf3 &updir = core::Vectorf3(0.f,1.f,0.f),
 		F32 znear = 1.f,
 		F32 zfar = 2.f,
@@ -53,7 +55,7 @@ protected:
 
 	core::Vectorf3 position;
 
-	core::Vectorf3 lookAtDir;
+	//core::Vectorf3 lookAtDir;
 
 	core::Vectorf3 up;
 
@@ -68,6 +70,12 @@ protected:
 	bool isDirty;
 
 	void* parent;
+
+	core::Quaternion quat;
+
+	core::Matrixf44 cameraMatrix;
+
+	core::Matrixf44 projectMatrix;
 };
 
 NS_End(XIRE)

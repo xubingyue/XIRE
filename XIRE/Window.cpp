@@ -42,7 +42,7 @@ void Window::OnUpdate()
 }
 
 void Window::OnRender()
-{  
+{   
 	g->BeginFrame();
 	 
 	for (int i = 0; i < drawObjectList.size(); ++i)
@@ -119,7 +119,7 @@ bool Window::Create()
 
 	g = new Graphics((Window*)this); 
 
-	camera = new Camera(this);
+	camera = new Camera(this,core::Vectorf3(0.f,0.f,0.f),core::Quaternion::CreateIdentity());
 
 	return true;
 }
@@ -162,7 +162,9 @@ LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 	switch (msg)
 	{
 	case WM_LBUTTONDOWN:
-		break;
+	{ 
+		/*camera->Rotate(0.0f, 0.0f, -0.19f); */
+	}break;
 	case WM_KEYUP:
 		if (wParam == VK_ESCAPE)
 		{
@@ -171,8 +173,8 @@ LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 		else if (wParam == VK_F11)
 		{
 			ToggleFullscreen();
-		}
-		break;
+		} 
+		break;  
 	case WM_CLOSE:
 		::PostQuitMessage(0);
 		break;
@@ -182,6 +184,13 @@ LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 	default:
 		break;
 	}
+
+	U8 keys[256];
+	if (GetKeyboardState(keys))
+	{
+		//VK_ADD
+	}
+
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 

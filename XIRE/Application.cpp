@@ -134,6 +134,6 @@ void Application::OnWindowRender(void* sender, RenderEventArgs e)
 {
 	if (!ApplicationRender.IsNull())
 	{
-		ApplicationRender(this, new AppRenderEvent(mainWindow));
+		ApplicationRender(this,  &AppRenderEvent(mainWindow));  
 	}
 }

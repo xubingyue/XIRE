@@ -87,7 +87,7 @@ core::Matrixf44& Transform::getMatrixScaleConst(F32 sx, F32 sy, F32 sz)
 }
 
 
-core::Matrixf44 Transform::MatrixPerspectiveLH(
+core::Matrixf44 Transform::PerspectiveMatrixLH(
 	F32 aspectRadio,
 	F32 fov,
 	F32 znear,
@@ -113,6 +113,46 @@ core::Matrixf44 Transform::MatrixPerspectiveLH(
 	matrix._matrix[1][0] = 0.f;							matrix._matrix[1][1] = 2 * znear / (top - bottom);	matrix._matrix[1][2] = (top + bottom) / (top - bottom); matrix._matrix[1][3] = 0.f;
 	matrix._matrix[2][0] = 0.f;							matrix._matrix[2][1] = 0.f;						matrix._matrix[2][2] = a;								matrix._matrix[2][3] = b;
 	matrix._matrix[3][0] = 0.f;							matrix._matrix[3][1] = 0.f;						matrix._matrix[3][2] = -1.f;							matrix._matrix[3][3] = 0.f;
+
+	return matrix;
+}
+
+core::Matrixf44 Transform::CameraMatrixLH(core::Vectorf3 &from, core::Vectorf3 &to, core::Vectorf3 &up)
+{
+
+	/*
+	欧拉相机 Matrix translation&rotation to form a Camera View matrix(这个方法不太好)
+
+	core::Matrixf44 m0 = Transform::getMatrixTranslationConst(-position.x, -position.y, -position.z);
+	core::Matrixf44 m1 = Transform::getMatrixRotationXConst(-PI * 90.f/180);
+	core::Matrixf44 m2 = Transform::getMatrixRotationYConst(0.f);
+	core::Matrixf44 m3 = Transform::getMatrixRotationZConst(0.f);
+
+	return m0*m1*m2*m3;
+	*/
+
+	//from to     up
+	//pos  lookat up
+
+	//UVN相机
+	//http://blog.csdn.net/chenfeiyang2009/article/details/7212091
+	//左手坐标系用左手法则判定方向，坑啊，书上没说
+
+	core::Vectorf3 N = (to - from).normalize();
+	core::Vectorf3 U = (up.CrossProduct(N)).normalize();
+	core::Vectorf3 V = (N.CrossProduct(U)).normalize();
+
+	core::Vectorf3 offset(from.dot(U), from.dot(V), from.dot(N));
+
+	core::Matrixf44 matrix;
+	matrix.MakeIdentity();
+
+	matrix._matrix[0][0] = U.x;			matrix._matrix[0][1] = V.x;			matrix._matrix[0][2] = N.x;
+	matrix._matrix[1][0] = U.y;			matrix._matrix[1][1] = V.y;			matrix._matrix[1][2] = N.y;
+	matrix._matrix[2][0] = U.z;			matrix._matrix[2][1] = V.z;			matrix._matrix[2][2] = N.z;
+	matrix._matrix[3][0] = -offset.x;	matrix._matrix[3][1] = -offset.y;	matrix._matrix[3][2] = -offset.z;
+	//matrix.Print();
+	matrix.MakeInverse();
 
 	return matrix;
 }

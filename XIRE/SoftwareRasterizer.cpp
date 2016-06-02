@@ -123,7 +123,7 @@ void SoftwareRasterizer::Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> 
 	{
 		for (int j = 0; j < XIRE_DEFAULT_WND_W; ++j)
 		{  
-			core::Vectorf4 clr(255, 0, 0, 255);
+			core::Vectorf4 clr(255, 0, 0, 0);
 
 			if (flag[i][j])
 			{

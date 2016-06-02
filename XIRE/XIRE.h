@@ -16,3 +16,4 @@
 #include "Vertex.hpp"
 #include "Transform.h"
 #include "MemoryPool.h"
+#include "Camera.h"

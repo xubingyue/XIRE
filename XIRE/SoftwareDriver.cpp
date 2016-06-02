@@ -38,7 +38,7 @@ void SoftwareDriver::BeginFrame()
 }
 
 void SoftwareDriver::EndFrame() 
-{ 
+{
 	D3DLOCKED_RECT rect;
 	memset(&rect, 0, sizeof(rect));
 	 
@@ -52,7 +52,7 @@ void SoftwareDriver::EndFrame()
 
 	void *backBuffer = rect.pBits;
 	U32 pitch = rect.Pitch;
-
+	
 	std::list<SwVertexBuffer*>::iterator it;
 	for (it = vertexRenderQueue.begin();it != vertexRenderQueue.end(); ++it)
 	{
@@ -74,12 +74,14 @@ void SoftwareDriver::EndFrame()
 			SafeDelete((*outBuffer)[i]);
 		}
 		
-		SafeDelete(outBuffer); 
+		(*outBuffer).clear();
+
+		SafeDelete(outBuffer);  
 	}
 
 	backSurface->UnlockRect();
- 
-	vertexRenderQueue.clear();
+	 
+	Clear();
 } 
 
 void SoftwareDriver::Translate(
@@ -90,9 +92,9 @@ void SoftwareDriver::Translate(
 {
 	SwVertexBuffer *vertex = (SwVertexBuffer*)vIn;
 
-	U8 *renderVBuffer = (U8*)MemoryPool::Get()._mm_malloc_16byte(sizeof(SwRenderPrimitive)*vertex->count, 16);
+	//U8 *renderVBuffer = (U8*)MemoryPool::Get()._mm_malloc_16byte(sizeof(SwRenderPrimitive)*vertex->count, 16);
 
-	std::vector<SwRenderPrimitive *> *renderList = new std::vector<SwRenderPrimitive *>();
+	std::vector<SwRenderPrimitive *> *renderList = new std::vector<SwRenderPrimitive*>();
 	Camera *cam = this->window->getCamera();
 
 	for (int i = 0; i < vertex->count; ++i)
@@ -113,6 +115,7 @@ void SoftwareDriver::Translate(
 		SwRenderPrimitive *vertex = new SwRenderPrimitive();
 		vertex->pos = worldpos;
 		renderList->push_back(vertex);
+
 		//memcpy(renderVBuffer + i * sizeof(SwRenderPrimitive), &vertex, sizeof(SwRenderPrimitive));
 	}
 
@@ -129,7 +132,7 @@ void SoftwareDriver::PerspectiveProj(
 	F32 zfar, 
 	void **vOut)
 {
-	core::Matrixf44 matrix = Transform::MatrixPerspectiveLH(aspectRadio, fov, znear, zfar);
+	core::Matrixf44 matrix = Transform::PerspectiveMatrixLH(aspectRadio, fov, znear, zfar);
 
 	std::vector<SwRenderPrimitive*> vec = *(std::vector<SwRenderPrimitive*>*)vIn;
 	 
@@ -159,7 +162,7 @@ void SoftwareDriver::ScreenProj(void *vIn, void **vOut)
 		data->pos /= data->pos.w;
 	}
 
-	*vOut = vIn; 
+	*vOut = vIn;
 }
 
 bool SoftwareDriver::StartupRender()
@@ -255,7 +258,7 @@ bool SoftwareDriver::ShutdownRender()
 
 void SoftwareDriver::DrawPrimitive(SwPrimitive *primitive)
 { 
-	vertexRenderQueue.push_back(primitive->vb);
+	vertexRenderQueue.push_back(primitive->vb); 
 } 
 
 void SoftwareDriver::Reset()
@@ -279,6 +282,6 @@ void SoftwareDriver::Present()
 
 void SoftwareDriver::Clear()
 {
-	
+	vertexRenderQueue.clear();
 }
 

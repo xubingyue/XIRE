@@ -172,6 +172,7 @@
     <ClInclude Include="Memfile.hpp" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="Primitive.hpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="Matrixf44.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="Graphics.cpp" />

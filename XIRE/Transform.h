@@ -31,7 +31,9 @@ public:
 
 	static core::Matrixf44& getMatrixScaleConst(F32 sx, F32 sy, F32 sz); 
 	
-	static core::Matrixf44 MatrixPerspectiveLH(F32 aspectRadio,F32 fov,F32 znear,F32 zfar);
+	static core::Matrixf44 CameraMatrixLH(core::Vectorf3 &from, core::Vectorf3 &to, core::Vectorf3 &up);
+
+	static core::Matrixf44 PerspectiveMatrixLH(F32 aspectRadio,F32 fov,F32 znear,F32 zfar);
 }; 
  
 NS_End(XIRE)

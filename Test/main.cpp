@@ -66,7 +66,7 @@ GameAppDelegate::GameAppDelegate()
 {
 	app.ApplicationInitialized += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
 	app.ApplicationRender += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
-
+	//app.ApplicationUpdate += MakeCCallback2();
 	//app.GetMainWindow()->WindowRender += MakeCCallback2(&GameAppDelegate::GameApp_OnWindowRender);
  	
 	app.Run();
@@ -87,6 +87,8 @@ void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, AppStartupE
 
 void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationRenderEventArgs e)
 { 
+	e.Data->window->camera->Rotate(0.01f, 0.0f, 0.0f); 
+	 
 //	//draw all mesh into 3d space
 //
 	//XIRE::Graphics *g = e.Data->window->getRender();
@@ -98,18 +100,7 @@ void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationRende
 }
  
 int main(int argc, char** argv)
-{
-	XIRE::core::Matrixf44 matrix;
-	matrix = XIRE::Transform::getMatrixTranslationConst(1.f, 2.f, 3.f); 
-	matrix.Print();
-	matrix.MakeInverse();
-	matrix.Print();
-
-	printf("%d\n", 8 * sizeof(XIRE::SwVertexP3N3T2));
-	printf("%d\n", 8 * sizeof(XIRE::core::Vectorf4));
-	printf("%d\n", 8 * sizeof(XIRE::core::Vectorf3));
-	printf("%d\n", 8 * sizeof(XIRE::core::Vectorf2));
-
+{  
 	//Demo of inheritance usage 
 	GameAppDelegate *app = GameAppDelegate::get(); 
 	return 0;
