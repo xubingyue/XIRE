@@ -22,7 +22,7 @@
 
 //以下为两种用法
 
-/*//Demo of inheritance
+/*//Demo of inheritance(Internal virtual functions)
 
 class TestApp
 	:public XIRE::Application
@@ -33,7 +33,7 @@ public:
 
 */
 
-//Demo of delegate
+//Demo of delegate(callback functions)
  
 class GameAppDelegate
 {
@@ -59,47 +59,49 @@ protected:
 
 protected:
 
-	XIRE::Application app; 
-
-	XIRE::SwMesh *mesh;
+	XIRE::Application *app;  
 };
 
 GameAppDelegate::GameAppDelegate()
 {
-	app.ApplicationInitialized += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
-	app.ApplicationRender += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
+	app = new XIRE::Application();
+
+	app->ApplicationInitialized += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
+	app->ApplicationRender += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
   
 	//app.GetMainWindow()->WindowRender += MakeCCallback2(&GameAppDelegate::GameApp_OnWindowRender);
  	
-	app.Run();
+	app->Run();
 }
 
 GameAppDelegate::~GameAppDelegate()
 {
-	
+	SafeDelete(app); 
 } 
 
 void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, ApplicationEventArgs e)
 { 
 	//test for resource loading
-	mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
+	XIRE::SwMesh *mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
+	XIRE::SwMesh *mesh2 = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/head.obj"));
+	
 	XIRE::Application *app = (XIRE::Application*)sender;
 
 	app->AddWindow(S("Window2"),1024,768);
 
 	app->GetMainWindow()->AddDrawable(mesh);
-	app->GetWindow(S("Window2"))->AddDrawable(mesh);
+	app->GetWindow(S("Window2"))->AddDrawable(mesh2);
 	
 }
 
 void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e)
 { 
-	e.Data->window->getCamera()->Rotate(0.01f, 0.0f, 0.0f); 
+	e.Data->window->getCamera()->Rotate(0.f, 0.f, 0.3f); 
 }
  
 int main(int argc, char** argv)
 {  
-	//Demo of inheritance usage 
-	GameAppDelegate *app = GameAppDelegate::get(); 
+	//Demo of inheritance usage  
+	GameAppDelegate::get(); 
 	return 0;
 } 

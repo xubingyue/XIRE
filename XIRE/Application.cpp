@@ -60,7 +60,10 @@ void Application::AddWindow(Window* window)
 	windows.push_back(window);
 
 	if (mainWindow == nullptr)
+	{
 		mainWindow = windows.front();
+		SetForegroundWindow(mainWindow->GetWindowHandle());
+	}
 }
 
 Window* Application::AddWindow(String title, U32 width, U32 height)
@@ -145,7 +148,7 @@ void Application::Exit(bool force)
 	}
 	else
 	{
-		TerminateProcess(handleApp, 0);
+		::TerminateProcess(handleApp, 0);
 	} 
 }
 
@@ -162,7 +165,9 @@ void Application::OnWindowClosed(void* sender, WindowEventArgs e)
 	Window* wnd = (Window*)sender;
 
 	auto itr = std::find(windows.begin(), windows.end(), wnd);
-	windows.erase(itr);
+	 
+	windows.erase(itr); 
+	//delete delWindow;
 
 	if (windows.size() == 0)
 	{

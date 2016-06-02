@@ -1,4 +1,4 @@
-#include "Window.h"
+﻿#include "Window.h"
 #include "Graphics.h"
 #include "RenderBase.h"
 #include "Drawable.h"
@@ -26,6 +26,10 @@ Window::Window(HINSTANCE hInstance,String title, int w, int h)
 Window::~Window()
 {
 	SafeDelete(g);
+	SafeDelete(camera);
+
+	for(int i=0;i<drawObjectList.size();++i)
+		SafeDelete(drawObjectList[i]);
 }
 
 HWND Window::GetWindowHandle()
@@ -145,7 +149,7 @@ void Window::Minimize()
 
 //Hacks for not breaking capsulation
 LRESULT CALLBACK Window::OnWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
+{ 
 	switch (msg)
 	{
 	case WM_CREATE:
@@ -155,8 +159,8 @@ LRESULT CALLBACK Window::OnWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPA
 	return ((Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA))->WndProc(hwnd, msg, wParam, lParam); 
 }
 
-LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
+LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{  
 	switch (msg)
 	{
 	case WM_LBUTTONDOWN:
@@ -220,12 +224,16 @@ void Window::Reset()
 
 void Window::Close()
 {
+	UnregisterClass(Name.c_str(), handleApp);
+	 
 	DestroyWindow(handleWindow);
 
 	if (!WindowClosed.IsNull())
 	{
 		WindowClosed(this, NULL);
 	}
+
+	delete this;
 }
 
 void Window::ToggleFullscreen()
