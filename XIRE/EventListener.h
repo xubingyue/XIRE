@@ -8,18 +8,20 @@
 
 NS_Begin(XIRE) 
 
+enum EventType
+{
+	ET_KeyBoardEvent = 0x1,
+	ET_MouseEvent = 0x1<<1,
+	ET_MiscEvent = 0x1<<2
+};
+
 class XIREAPI EventListener : public Root
 {
 public:
 
-	enum EventType
-	{
-		ET_KeyBoardEvent = 0x1,
-		ET_MouseEvent = 0x1<<1,
-		ET_MiscEvent = 0x1<<2
-	};
+	typedef std::map<EventType, std::vector<Window*, EventListener*>> EventRegistry;
 
-	EventListener();
+	EventListener(void *parent = nullptr);
 
 	virtual ~EventListener(); 
 
@@ -29,9 +31,13 @@ public:
 
 	static void DispatchEvent();
 
-private:
+protected:
 
-	static std::map<EventType, std::vector<EventListener*>> RegisteredDelegates;
+	U32 registeredEventType;
+
+private:  
+
+
 };
 
 NS_End(XIRE)

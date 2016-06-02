@@ -11,9 +11,9 @@ Camera::Camera(void *parentWindow, const core::Vectorf3 &pos,
 	const core::Vectorf3 &updir,
 	F32 znear,
 	F32 zfar,
-	F32 fov)
-{
-	parent = parentWindow;
+	F32 fov)  
+{	 
+	Parent = parentWindow;
 
 	setPosition(pos);
 	setFov(fov);
@@ -104,10 +104,10 @@ core::Vectorf3 Camera::getPosition()
 
 void Camera::Update()
 {
-	if (parent == NULL)
+	if (Parent == NULL)
 		return;
 
-	Window* parentWindow = (Window*)parent;
+	Window* parentWindow = (Window*)Parent;
 
 	F32 aspect = parentWindow->Width/parentWindow->Height; 
 

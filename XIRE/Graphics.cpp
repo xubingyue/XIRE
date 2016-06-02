@@ -20,7 +20,7 @@ Graphics::Graphics(Window *_window)
 
 Graphics::~Graphics()
 {
-	SafeDelete(currentDriver);
+	SafeDelete(currentDriver); 
 }
 
 RenderBase* Graphics::LoadDriver(String driverName)

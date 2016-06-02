@@ -22,10 +22,8 @@ public:
 	void CreateBuffer(U32 bufferWidth, U32 bufferHeight);
 
 	virtual ~SoftwareRasterizer();
-  
-	//void DrawPrimitive(SwPrimitive *primitive);
 
-	void Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> primitives);
+	void Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive*> primitives);
 
 	void Rasterize();
 
@@ -33,8 +31,7 @@ public:
 
 	void DrawRHZPrimitive(SwPrimitive *primitive); 
 
-protected: 
-	
+protected:
 
 	//SoftwareDriver *driver;
 

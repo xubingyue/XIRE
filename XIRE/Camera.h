@@ -68,9 +68,7 @@ protected:
 	CameraMode cameraMode;
 
 	bool isDirty;
-
-	void* parent;
-
+ 
 	core::Quaternion quat;
 
 	core::Matrixf44 cameraMatrix;

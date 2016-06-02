@@ -27,9 +27,6 @@ Window::~Window()
 {
 	SafeDelete(g);
 	SafeDelete(camera);
-
-	for(int i=0;i<drawObjectList.size();++i)
-		SafeDelete(drawObjectList[i]);
 }
 
 HWND Window::GetWindowHandle()
@@ -46,10 +43,7 @@ void Window::OnRender()
 {   
 	g->BeginFrame();
 	 
-	for (int i = 0; i < drawObjectList.size(); ++i)
-	{
-		g->Draw(drawObjectList[i]);
-	}
+	this->Draw(g);
 	 
 	if (!WindowRender.IsNull())
 	{
@@ -261,7 +255,7 @@ void Window::ToggleFullscreen()
 	}
 }
 
-void Window::AddDrawable(Drawable *drawable)
-{
-	drawObjectList.push_back(drawable);
-}
+//void Window::AddDrawable(Drawable *drawable)
+//{
+//	drawObjectList.push_back(drawable);
+//}

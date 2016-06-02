@@ -2,7 +2,7 @@
 
 NS_Using(XIRE)
 
-Root::Root() : Name(S(""))
+Root::Root(void *parent) : Name(S("")),Parent(parent)
 {
 
 } 

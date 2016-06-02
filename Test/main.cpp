@@ -3,7 +3,7 @@
 //Include XIRE framework header
 
 #include "..\XIRE\XIRE_Cfg.h"
-#include "..\XIRE\XIRE.h" 
+#include "..\XIRE\XIRE.h"
 
 //proper version of the lib file
 #ifdef _DEBUG 
@@ -20,7 +20,7 @@
 	#endif
 #endif
 
-//以下为两种用法
+//以下为两种示例用法
 
 /*//Demo of inheritance(Internal virtual functions)
 
@@ -28,6 +28,7 @@ class TestApp
 	:public XIRE::Application
 {
 public: 
+	
 
 };
 
@@ -80,7 +81,7 @@ GameAppDelegate::~GameAppDelegate()
 } 
 
 void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, ApplicationEventArgs e)
-{ 
+{
 	//test for resource loading
 	XIRE::SwMesh *mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
 	XIRE::SwMesh *mesh2 = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/head.obj"));
@@ -89,9 +90,8 @@ void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, Application
 
 	app->AddWindow(S("Window2"),1024,768);
 
-	app->GetMainWindow()->AddDrawable(mesh);
-	app->GetWindow(S("Window2"))->AddDrawable(mesh2);
-	
+	app->GetMainWindow()->AddChild(mesh);
+	app->GetWindow(S("Window2"))->AddChild(mesh2);
 }
 
 void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e)

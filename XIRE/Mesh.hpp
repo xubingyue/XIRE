@@ -14,7 +14,7 @@ public:
 
 	SwMesh(String filename)
 	{
-		m_primitives.clear();
+		primitives.clear();
 		LoadFromObj(filename);
 	}
 
@@ -22,7 +22,7 @@ public:
 	{
 		ObjLoader loader;
 		io::Memfile memfile;   
-		loader.LoadGeometryFromObj(filepath, m_primitives);
+		loader.LoadGeometryFromObj(filepath, primitives);
 
 		return;
 
@@ -30,7 +30,7 @@ public:
 
 		memfile.Open(s_filepath.c_str()); 
 
-		loader.LoadGeometryFromObj(StringToWString(memfile.Data()), m_primitives); 
+		loader.LoadGeometryFromObj(StringToWString(memfile.Data()), primitives); 
 	}
  
 	std::wstring StringToWString(const std::string &str)
@@ -46,16 +46,6 @@ public:
 		std::copy(wstr.begin(), wstr.end(), str.begin());
 		return str;
 	}
-
-	void Draw(Graphics *g) override
-	{
-		for (U32 i = 0; i < m_primitives.size(); ++i)
-		{
-			g->DrawPrimitive(&m_primitives[i]);
-		}
-	}
-
-	std::vector<SwPrimitive> m_primitives;
 };
 
 NS_End(XIRE)

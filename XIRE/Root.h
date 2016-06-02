@@ -8,11 +8,13 @@ class XIREAPI Root
 {
 public:
 
-	Root();
+	Root(void *parent = nullptr);
 
 	virtual ~Root();
 
 	String Name;
+
+	void *Parent;
 };
 
 NS_End(XIRE)
