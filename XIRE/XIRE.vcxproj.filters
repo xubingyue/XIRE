@@ -73,9 +73,6 @@
     <ClInclude Include="MatrixSIMD.hpp">
       <Filter>core\math</Filter>
     </ClInclude>
-    <ClInclude Include="Matrixf33.hpp">
-      <Filter>core\math</Filter>
-    </ClInclude>
     <ClInclude Include="SoftShader.h">
       <Filter>renderer\software</Filter>
     </ClInclude>

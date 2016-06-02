@@ -12,8 +12,7 @@ public:
 
 	virtual ~Scene();
 
-	Camera* CreateCamera();
-
+	Camera* CreateCamera(); 
 
 };
 

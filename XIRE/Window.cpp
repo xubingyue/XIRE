@@ -93,8 +93,7 @@ bool Window::Create()
 
 	RECT rect = { 0, 0, Width, Height };
 	AdjustWindowRect(&rect, GetWindowLong(handleWindow, GWL_STYLE), FALSE);
-	SetWindowPos(handleWindow, HWND_TOP, 0, 0, rect.right - rect.left, rect.bottom - rect.top,
-		SWP_NOZORDER | SWP_NOMOVE);
+	SetWindowPos(handleWindow, HWND_TOP, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 
 	if (fullscreen == true)
 	{
@@ -174,7 +173,7 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		else if (wParam >= 'A' && wParam <= 'Z')
 		{
 			printf("KEYUP:%d\n", wParam);
-		}
+		} 
 	}
 	break;  
 	case WM_KEYDOWN:
@@ -183,6 +182,15 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 
 		}
+
+		KeyEvent data;
+		data.IsPressed = true;
+		data.keycode = wParam;
+
+		//KeyEventArgs e(&data);
+
+		EventListener::DispatchEvent(eventRegistry[ET_KeyBoardEvent], data);
+
 	} break;
 	case WM_CLOSE:
 	{ 
@@ -254,8 +262,3 @@ void Window::ToggleFullscreen()
 		SetWindowPlacement(handleWindow, &windowPlacement);
 	}
 }
-
-//void Window::AddDrawable(Drawable *drawable)
-//{
-//	drawObjectList.push_back(drawable);
-//}

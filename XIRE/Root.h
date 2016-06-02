@@ -15,6 +15,8 @@ public:
 	String Name;
 
 	void *Parent;
+
+	U32 Type;
 };
 
 NS_End(XIRE)

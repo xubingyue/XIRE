@@ -4,7 +4,8 @@
 NS_Using(XIRE)
 
 //traditionally we have only one window for a game instance
-//so a window is created upon application startup
+//so a main window is created upon application startup
+//however with AddWindow method you can add any amount of window at the same time
 
 Application::Application(String title, U32 width, U32 height)
 {
@@ -166,8 +167,7 @@ void Application::OnWindowClosed(void* sender, WindowEventArgs e)
 
 	auto itr = std::find(windows.begin(), windows.end(), wnd);
 	 
-	windows.erase(itr); 
-	//delete delWindow;
+	windows.erase(itr);
 
 	if (windows.size() == 0)
 	{

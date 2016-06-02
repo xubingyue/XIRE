@@ -68,8 +68,6 @@ protected:
 
 	Camera *camera;
 
-	//std::vector<Drawable*> drawObjectList; 
-
 public:
 
 	Graphics *getRender() { return g; }

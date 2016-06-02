@@ -4,7 +4,8 @@
 
 #include <functional>
 #include <vector>
- 
+#include <algorithm>
+
 NS_Begin(XIRE)
 
 template <class T>  
@@ -44,8 +45,10 @@ protected:
 	}
 
 	void RemoveDelegate(Delegate callback)
-	{
-		Delegates.erase(callback);
+	{ 
+		/*auto itr = std::find(Delegates.begin(), Delegates.end(), callback);
+		if(itr != Delegates.end())
+			Delegates.erase(itr);*/
 	} 
 
 	void TriggerCallback(void *sender, T *data)

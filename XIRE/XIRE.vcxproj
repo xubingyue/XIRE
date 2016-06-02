@@ -167,7 +167,6 @@
     <ClInclude Include="EventListener.h" />
     <ClInclude Include="IndexBuffer.hpp" />
     <ClInclude Include="Material.hpp" />
-    <ClInclude Include="Matrixf33.hpp" />
     <ClInclude Include="Matrixf44.h" />
     <ClInclude Include="Memfile.hpp" />
     <ClInclude Include="MemoryPool.h" />

@@ -82,12 +82,12 @@ void Camera::Move(const core::Vectorf3& point)
 
 void Camera::Rotate(F32 yaw, F32 pitch, F32 roll)
 {
-	Quaternion rollQ = Quaternion::CreateRotationY(roll);
-	Quaternion yawQ = Quaternion::CreateRotationX(yaw);
-	Quaternion pitchQ = Quaternion::CreateRotationZ(pitch);
+	Quaternion qRoll  = Quaternion::CreateRotationY(roll);
+	Quaternion qYaw   = Quaternion::CreateRotationX(yaw);
+	Quaternion qPitch = Quaternion::CreateRotationZ(pitch);
 
-	quat = quat * rollQ;
-	quat = yawQ * quat; 
+	quat = quat * qRoll;
+	quat = qYaw * quat;
 	 
 	MarkDirty();
 }

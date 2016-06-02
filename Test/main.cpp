@@ -58,6 +58,8 @@ protected:
 
 	void GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e);
 
+	void GameApp_OnMeshKeyDown(void *sender, KeyEventArgs e);
+
 protected:
 
 	XIRE::Application *app;  
@@ -86,6 +88,8 @@ void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, Application
 	XIRE::SwMesh *mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
 	XIRE::SwMesh *mesh2 = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/head.obj"));
 	
+	mesh->KeyDown += MakeCCallback2(&GameAppDelegate::GameApp_OnMeshKeyDown);
+
 	XIRE::Application *app = (XIRE::Application*)sender;
 
 	app->AddWindow(S("Window2"),1024,768);
@@ -96,11 +100,21 @@ void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, Application
 
 void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e)
 { 
-	e.Data->window->getCamera()->Rotate(0.f, 0.f, 0.3f); 
+	 
+}
+
+void GameAppDelegate::GameApp_OnMeshKeyDown(void *sender, KeyEventArgs e)
+{
+	XIRE::SwMesh *mesh = (XIRE::SwMesh *)sender;
+	if (mesh == nullptr)
+		return;
+
+	XIRE::Window* wnd = (XIRE::Window*)(mesh->Parent);
+	wnd->getCamera()->Rotate(0.f, 0.f, 0.3f);
 }
  
 int main(int argc, char** argv)
-{  
+ {  
 	//Demo of inheritance usage  
 	GameAppDelegate::get(); 
 	return 0;

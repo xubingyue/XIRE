@@ -6,85 +6,93 @@ NS_Using(XIRE)
 EventListener::EventListener(void *parent)
 	:Root(parent)
 {
-
+	MouseLeftButtonDown += MakeCCallback2(&EventListener::onMouseLeftButtonDown);
+	MouseLeftButtonUp += MakeCCallback2(&EventListener::onMouseLeftButtonUp);
+	MouseLeftButtonDoubleClick += MakeCCallback2(&EventListener::onMouseLeftButtonDoubleClick);
+	MouseMiddleButtonDown += MakeCCallback2(&EventListener::onMouseMiddleButtonDown);
+	MouseMiddleButtonUp += MakeCCallback2(&EventListener::onMouseMiddleButtonUp);
+	MouseRightButtonDown += MakeCCallback2(&EventListener::onMouseRightButtonDown);
+	MouseRightButtonUp += MakeCCallback2(&EventListener::onMouseRightButtonUp);
+	MouseRightButtonDoubleClick += MakeCCallback2(&EventListener::onMouseRightButtonDoubleClick);
+	MouseEnter += MakeCCallback2(&EventListener::onMouseEnter);
+	MouseLeave += MakeCCallback2(&EventListener::onMouseLeave);
+	MouseMove += MakeCCallback2(&EventListener::onMouseMove);
+	MouseWheel += MakeCCallback2(&EventListener::onMouseWheel);
+	KeyDown +=						MakeCCallback2(&EventListener::onKeyDown);
+	KeyUp +=						MakeCCallback2(&EventListener::onKeyUp);
 }
 
 EventListener::~EventListener()
 { 
-
+	MouseLeftButtonDown -= MakeCCallback2(&EventListener::onMouseLeftButtonDown);
+	MouseLeftButtonUp -= MakeCCallback2(&EventListener::onMouseLeftButtonUp);
+	MouseLeftButtonDoubleClick -= MakeCCallback2(&EventListener::onMouseLeftButtonDoubleClick);
+	MouseMiddleButtonDown -= MakeCCallback2(&EventListener::onMouseMiddleButtonDown);
+	MouseMiddleButtonUp -= MakeCCallback2(&EventListener::onMouseMiddleButtonUp);
+	MouseRightButtonDown -= MakeCCallback2(&EventListener::onMouseRightButtonDown);
+	MouseRightButtonUp -= MakeCCallback2(&EventListener::onMouseRightButtonUp);
+	MouseRightButtonDoubleClick -= MakeCCallback2(&EventListener::onMouseRightButtonDoubleClick);
+	MouseEnter -= MakeCCallback2(&EventListener::onMouseEnter);
+	MouseLeave -= MakeCCallback2(&EventListener::onMouseLeave);
+	MouseMove -= MakeCCallback2(&EventListener::onMouseMove);
+	MouseWheel -= MakeCCallback2(&EventListener::onMouseWheel);
+	KeyDown -= MakeCCallback2(&EventListener::onKeyDown);
+	KeyUp -= MakeCCallback2(&EventListener::onKeyUp);
 }
 	
 void EventListener::RegisterEventListener(const U32& type)
-{
-	/*
-	if (type & ET_KeyBoardEvent)
-	{
-		std::vector<EventListener*> _delegates = RegisteredDelegates[ET_KeyBoardEvent];
-		auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-		if (_delegates.end() == itr)
-		{
-			RegisteredDelegates[ET_KeyBoardEvent].push_back(this); 
-		} 
-	}
-
-	if (type & ET_MouseEvent)
-	{
-		std::vector<EventListener*> _delegates = RegisteredDelegates[ET_MouseEvent];
-		auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-		if (_delegates.end() == itr)
-		{
-			RegisteredDelegates[ET_MouseEvent].push_back(this);
-		}
-	}
-
-	if (type & ET_MiscEvent)
-	{
-		std::vector<EventListener*> _delegates = RegisteredDelegates[ET_MiscEvent];
-		auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-		if (_delegates.end() == itr)
-		{
-			RegisteredDelegates[ET_MiscEvent].push_back(this);
-		}
-	}*/
+{ 
 	registeredEventType |= type;
 }
 
 void EventListener::RemoveEventListener(const U32 &type)
 {
-	registeredEventType &= ~type;
-
-	//if (type & ET_KeyBoardEvent)
-	//{
-	//	/*std::vector<EventListener*> _delegates = RegisteredDelegates[ET_KeyBoardEvent];
-	//	auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-	//	if (_delegates.end() != itr)
-	//	{
-	//		RegisteredDelegates[ET_KeyBoardEvent].erase(itr);
-	//	}*/ 
-	//}
-
-	//if (type & ET_MouseEvent)
-	//{
-	//	/*std::vector<EventListener*> _delegates = RegisteredDelegates[ET_MouseEvent];
-	//	auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-	//	if (_delegates.end() != itr)
-	//	{
-	//		RegisteredDelegates[ET_MouseEvent].erase(itr);
-	//	}*/
-	//}
-
-	//if (type & ET_MiscEvent)
-	//{
-	//	/*std::vector<EventListener*> _delegates = RegisteredDelegates[ET_MiscEvent];
-	//	auto itr = std::find(_delegates.begin(), _delegates.end(), this);
-	//	if (_delegates.end() != itr)
-	//	{
-	//		RegisteredDelegates[ET_MiscEvent].erase(itr);
-	//	}*/
-	//}
+	registeredEventType &= ~type;  
 }
 
-void EventListener::DispatchEvent()
+void EventListener::RaiseEvent(IEvent e)
 {
+	switch (e.type)
+	{
+	case ET_ApplicationEvent:
+	{
 
+	}
+		break;
+	case ET_KeyBoardEvent:
+	{
+		if (!KeyDown.IsNull())
+		{
+			KeyDown(this, NULL);
+		}
+	}
+		break;
+	case ET_MouseEvent:
+	{
+
+	}
+		break;
+	case ET_WindowEvent:
+	{
+
+	}
+		break;
+	case ET_MiscEvent:
+	{
+
+	}
+		break;
+	default:
+		break;
+	}
+}
+
+void EventListener::DispatchEvent(EventListenerArray array, IEvent e)
+{
+	EventListenerArray::iterator itr;
+	for (itr = array.begin(); itr != array.end(); ++itr)
+	{
+		EventListener *listener = *itr;
+		listener->RaiseEvent(e);
+	}
 }
