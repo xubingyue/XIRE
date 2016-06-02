@@ -4,7 +4,7 @@
 
 NS_Begin(XIRE)
 
-class Root
+class XIREAPI Root
 {
 public:
 

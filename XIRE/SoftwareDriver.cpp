@@ -14,9 +14,9 @@ SoftwareDriver::SoftwareDriver(Window *_window)
 	Name = S("SoftwareDriver");
 	window = _window;
 
-	windowed = !window->Fullscreen;
+	windowed = !window->IsFullscreen();
 
-	rasterizer = new SoftwareRasterizer(this);
+	rasterizer = new SoftwareRasterizer(window->Width,window->Height);
 }
 
 SoftwareDriver::~SoftwareDriver()

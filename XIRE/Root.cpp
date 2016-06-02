@@ -2,12 +2,10 @@
 
 NS_Using(XIRE)
 
-Root::Root()
-	:Name(TEXT(""))
+Root::Root() : Name(S(""))
 {
 
-}
-
+} 
 
 Root::~Root()
 {

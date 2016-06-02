@@ -31,36 +31,33 @@ public:
 
 	T *Data;
 	bool Handled;
-};
+}; 
 
-struct XIREAPI AppStartupEvent
-{ 
-	int x;
-};  
-
-
-struct XIREAPI AppRenderEvent
+struct XIREAPI ApplicationEvent
 {
 	Window *window;
 
-	explicit AppRenderEvent(Window *_w)
+	explicit ApplicationEvent(Window *_w)
 	{
 		window = _w;
 	}
 };
  
-struct XIREAPI RenderEvent
+struct XIREAPI WindowEvent
 {
 	int x;
 };
 
-#define ApplicationInitializedHandler XIRE::EventHandler<XIRE::AppStartupEvent>
-#define AppStartupEventArgs XIRE::EventArgs<XIRE::AppStartupEvent>
+#define ApplicationEventArgs XIRE::EventArgs<XIRE::ApplicationEvent>
+#define ApplicationEventHandler XIRE::EventHandler<XIRE::ApplicationEvent>
+//#define ApplicationInitializedHandler ApplicationEventHandler
+//#define ApplicationRenderHandler ApplicationEventHandler
 
-#define ApplicationRenderHandler XIRE::EventHandler<XIRE::AppRenderEvent>
-#define ApplicationRenderEventArgs XIRE::EventArgs<XIRE::AppRenderEvent>
 
-#define RenderEventHandler XIRE::EventHandler<XIRE::RenderEvent>
-#define RenderEventArgs XIRE::EventArgs<XIRE::RenderEvent>
+#define WindowEventArgs XIRE::EventArgs<XIRE::WindowEvent> 
+#define WindowEventHandler XIRE::EventHandler<XIRE::WindowEvent>
+//#define WindowRenderEventHandler WindowEventHandler
+//#define WindowUpdateEventHandler WindowEventHandler
+
 
 NS_End(XIRE) 

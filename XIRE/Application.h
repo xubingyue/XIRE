@@ -25,9 +25,11 @@ public:
 
 	void AddWindow(Window* window); 
 
-	Window* AddWindow(String title,U32 Width,U32 Height);
+	Window* AddWindow(String title,U32 Width= XIRE_DEFAULT_WND_W,U32 Height= XIRE_DEFAULT_WND_H);
  
 	Window* GetMainWindow();
+
+	Window* GetWindow(String title);
 
 	virtual void Startup();
 
@@ -37,23 +39,23 @@ public:
 
 	virtual void Resume();
 
+	virtual void Exit(bool force=false);
+
 	virtual void OnApplicationInitialized();
 
 	virtual void OnApplicationDestroy();
 
-	virtual void OnApplicationUpdate();
-
-	virtual void OnApplicationBeginFrame();
-
-	virtual void OnApplicationEndFrame();
+	virtual void OnApplicationUpdate();  
 
 	virtual void OnApplicationRender();
 	
-	void OnWindowRender(void* sender, RenderEventArgs e);
+	void OnWindowRender(void* sender, WindowEventArgs e);
 
-	ApplicationInitializedHandler ApplicationInitialized;   
+	void OnWindowClosed(void* sender, WindowEventArgs e);
 
-	ApplicationRenderHandler ApplicationRender;
+	ApplicationEventHandler ApplicationInitialized;   
+
+	ApplicationEventHandler ApplicationRender;
 
 public:
 

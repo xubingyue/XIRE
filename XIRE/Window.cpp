@@ -4,16 +4,13 @@
 #include "Drawable.h"
 #include "Camera.h"
 
-NS_Using(XIRE)
-
-Window::Window()
-	:  Title(S("")), Fullscreen(false), Width(1024), Height(768)
-{
-}
+NS_Using(XIRE) 
 
 Window::Window(HINSTANCE hInstance,String title, int w, int h)
-	:Window()
+	: fullscreen(false), Width(1024), Height(768)
 {
+	Name = title;
+
 	handleApp = hInstance;
 
 	Title = title;
@@ -86,7 +83,7 @@ bool Window::Create()
 		NULL,
 		Title.c_str(),
 		Title.c_str(),
-		Fullscreen ? WS_EX_TOPMOST : WS_OVERLAPPEDWINDOW&(~WS_MAXIMIZEBOX),
+		fullscreen ? WS_EX_TOPMOST : WS_OVERLAPPEDWINDOW&(~WS_MAXIMIZEBOX),
 		(FullscrWidth - Width) / 2,
 		(FullscrHeight - Height) / 2,
 		Width,
@@ -101,7 +98,7 @@ bool Window::Create()
 	SetWindowPos(handleWindow, HWND_TOP, 0, 0, rect.right - rect.left, rect.bottom - rect.top,
 		SWP_NOZORDER | SWP_NOMOVE);
 
-	if (Fullscreen == true)
+	if (fullscreen == true)
 	{
 		SetWindowLongPtr(handleWindow, GWL_STYLE, WS_EX_TOPMOST);
 	}
@@ -128,14 +125,14 @@ void Window::Show()
 {
 	if (FAILED(::ShowWindow(handleWindow, SW_SHOWNORMAL)))
 	{
-		MessageBox(NULL,TEXT("H"),TEXT("H"),0);
-		//Log here
+		MessageBox(NULL,TEXT("H"),TEXT("H"),0); 
 		return;
 	}
 }
 
 void Window::Hide()
 {
+
 }
 
 void Window::Maximize()
@@ -146,6 +143,7 @@ void Window::Minimize()
 {
 }
 
+//Hacks for not breaking capsulation
 LRESULT CALLBACK Window::OnWindowMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -166,30 +164,48 @@ LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 		/*camera->Rotate(0.0f, 0.0f, -0.19f); */
 	}break;
 	case WM_KEYUP:
+	{
 		if (wParam == VK_ESCAPE)
 		{
-			::PostQuitMessage(0);
+			//::PostQuitMessage(0);
 		}
 		else if (wParam == VK_F11)
 		{
 			ToggleFullscreen();
-		} 
-		break;  
+		}
+		else if (wParam >= 'A' && wParam <= 'Z')
+		{
+			printf("KEYUP:%d\n", wParam);
+		}
+	}
+	break;  
+	case WM_KEYDOWN:
+	{
+		if (wParam >= 'A' && wParam <= 'Z')
+		{
+
+		}
+	} break;
 	case WM_CLOSE:
-		::PostQuitMessage(0);
-		break;
+	{ 
+		this->Close();
+	} break;
 	case WM_DESTROY:
-		::PostQuitMessage(0);
-		break;
+	{ 
+	} break;
+	case WM_QUIT:
+	{
+		 
+	}break;
 	default:
 		break;
 	}
 
-	U8 keys[256];
-	if (GetKeyboardState(keys))
-	{
-		//VK_ADD
-	}
+	//U8 keys[256];
+	//if (GetKeyboardState(keys))
+	//{
+	//	 
+	//}
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
@@ -202,11 +218,21 @@ void Window::Reset()
 	}
 }
 
+void Window::Close()
+{
+	DestroyWindow(handleWindow);
+
+	if (!WindowClosed.IsNull())
+	{
+		WindowClosed(this, NULL);
+	}
+}
+
 void Window::ToggleFullscreen()
 {
-	Fullscreen = !Fullscreen;
+	fullscreen = !fullscreen;
 
-	if (!Fullscreen)
+	if (!fullscreen)
 	{
 		SetWindowLongPtr(handleWindow, GWL_STYLE, WS_OVERLAPPEDWINDOW);
 	}
@@ -218,14 +244,10 @@ void Window::ToggleFullscreen()
 
 		SetWindowLongPtr(handleWindow, GWL_STYLE, WS_EX_TOPMOST);
 	}
+ 
+	Reset(); 
 
-	// Reset the Device
-	// OnLost();
-	//p_graphic->reset_graphic(core_cfg);
-	Reset();
-	//OnReset();
-
-	if (!Fullscreen)
+	if (!fullscreen)
 	{
 		SetWindowPlacement(handleWindow, &windowPlacement);
 	}

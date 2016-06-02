@@ -17,12 +17,12 @@ class XIREAPI SoftwareRasterizer
 {
 public:
 
-	SoftwareRasterizer(SoftwareDriver* driver);
+	SoftwareRasterizer(U32 bufferWidth, U32 bufferHeight);
+
+	void CreateBuffer(U32 bufferWidth, U32 bufferHeight);
 
 	virtual ~SoftwareRasterizer();
- 
-	void Initialize();
-
+  
 	//void DrawPrimitive(SwPrimitive *primitive);
 
 	void Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> primitives);
@@ -36,7 +36,7 @@ public:
 protected: 
 	
 
-	SoftwareDriver *driver;
+	//SoftwareDriver *driver;
 
 	SwSurface *backbuffer;
 };

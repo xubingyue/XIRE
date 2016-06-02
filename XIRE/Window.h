@@ -12,18 +12,13 @@ NS_Begin(XIRE)
 class Graphics; 
 class Camera;
 
-class XIREAPI Window
-	:public Drawable
-{
-protected:
-
-    Window();
-
+class XIREAPI Window : public Drawable 
+{ 
 public:
 
-	explicit Window(HINSTANCE hInstance, String title, int w, int h);
+	explicit Window(HINSTANCE hInstance, String title, int w=1024, int h=768);
 	 
-	virtual ~Window();
+	virtual ~Window(); 
 
 public:
 
@@ -32,6 +27,8 @@ public:
 	void Show();
 
 	void Hide();
+
+	void Close();
 
 	void Maximize();
 
@@ -45,7 +42,9 @@ public:
 
 	void AddDrawable(Drawable *drawable);
  
-	RenderEventHandler WindowRender;
+	WindowEventHandler WindowRender;
+
+	WindowEventHandler WindowClosed;
 
 private:
 
@@ -62,11 +61,16 @@ protected:
 	WNDCLASSEX wcex; 
 
 	WINDOWPLACEMENT windowPlacement;
-	
-//Graphics
+ 
 protected: 
 
 	Graphics *g;
+
+	bool fullscreen;
+
+	Camera *camera;
+
+	std::vector<Drawable*> drawObjectList; 
 
 public:
 
@@ -76,6 +80,8 @@ public:
 
 	HWND GetWindowHandle();
 
+	bool IsFullscreen() { return fullscreen; }
+
 	void ToggleFullscreen();
 
 	int Width;
@@ -84,13 +90,8 @@ public:
 	int FullscrWidth;
 	int FullscrHeight;
 
-	bool Fullscreen;
 
-	String Title;
-
-	Camera *camera;
-
-	std::vector<Drawable*> drawObjectList;
+	String Title; 
 };
 
 NS_End(XIRE)

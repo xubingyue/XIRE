@@ -9,32 +9,20 @@
 
 NS_Using(XIRE)
 
-SoftwareRasterizer::SoftwareRasterizer(SoftwareDriver* _driver)
-{
-	driver = _driver;
-
-	//Create a backbuffer
-	backbuffer = new SwSurface(S("Backbuffer"), XIRE_DEFAULT_WND_W, XIRE_DEFAULT_WND_H, 4);
-
+SoftwareRasterizer::SoftwareRasterizer(U32 bufferWidth,U32 bufferHeight)
+{ 
+	CreateBuffer(bufferWidth, bufferHeight); 
 }
 
 SoftwareRasterizer::~SoftwareRasterizer()
 {
-	//
-	//for (;!primitiveQueue.empty();)
-	//{
-	//	//SafeDelete(primitiveQueue.front());
-	//	primitiveQueue.pop_front();
-	//}
-
-	//vertexRenderQueue.clear();
+	 
 }
 
-void SoftwareRasterizer::Initialize()
+void SoftwareRasterizer::CreateBuffer(U32 bufferWidth, U32 bufferHeight)
 {
-
-} 
-
+	backbuffer = new SwSurface(S("Backbuffer"), bufferWidth, bufferHeight, 4);
+}   
  
 template<typename T>
 static inline T Clamp(const T& p, const T& min, const T& max) { if (p < min) return min; if (p > max) return max; return p; }
@@ -94,38 +82,48 @@ static inline U32 float4_2_uint32(const core::Vectorf4& f)
 	return ret;
 #endif
 }
-bool flag[XIRE_DEFAULT_WND_W][XIRE_DEFAULT_WND_H];
+
+bool flag[XIRE_DEFAULT_WND_W * 2][XIRE_DEFAULT_WND_H * 2] = { 0 };
+
 //Rasterization goes here
 void SoftwareRasterizer::Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> buffer)
-{ 
+{  
+	U32 width = backbuffer->getWidth();
+	U32 height = backbuffer->getHeight();
+
 	//Camera coordinates to screen pixels
-	F32 aspectRatio = XIRE_DEFAULT_WND_W*1./ XIRE_DEFAULT_WND_H;
+	F32 aspectRatio = width*1.f/ height;
 	F32 h = 2 * 1.f / tanf(90.f*0.5);
 	F32 w = h * aspectRatio;
 
 	std::vector<core::Vectorf2> pts;
-	
-	memset(flag, 0, sizeof(bool)*XIRE_DEFAULT_WND_W*XIRE_DEFAULT_WND_H);
+	 
+	memset(flag,0,sizeof(bool)*XIRE_DEFAULT_WND_W*XIRE_DEFAULT_WND_H*4);
+
 	for (int i = 0; i < buffer.size(); ++i)
 	{
 		buffer[i]->pos /= buffer[i]->pos.z;
 
-		U32 px = (buffer[i]->pos.x + 1)* XIRE_DEFAULT_WND_W / w;
-		U32 py = (buffer[i]->pos.y + 1)*XIRE_DEFAULT_WND_H / h; 
-		if (px >= 0 && px < XIRE_DEFAULT_WND_W &&py >= 0 && py < XIRE_DEFAULT_WND_H)
+		/*U32 px = (buffer[i]->pos.x + 1)* width / w;
+		U32 py = height - (buffer[i]->pos.y + 1)*height / h;*/
+
+		U32 px = (buffer[i]->pos.x+1) * width / w;
+		U32 py = (buffer[i]->pos.y+1) * height / h;
+
+		if (px >= 0 && px < width &&py >= 0 && py < height)
 		{
 			flag[py][px] = true;
 		}
 	} 
 
 	int cnt = 0; 
-	for (int i = 0; i < XIRE_DEFAULT_WND_H; ++i)
+	for (int i = 0; i < height; ++i)
 	{
-		for (int j = 0; j < XIRE_DEFAULT_WND_W; ++j)
+		for (int j = 0; j < width; ++j)
 		{  
 			core::Vectorf4 clr(255, 0, 0, 0);
 
-			if (flag[i][j])
+			if (flag[i][j] == true)
 			{
 				clr.a = 255;
 				clr.r = 255;
@@ -139,7 +137,7 @@ void SoftwareRasterizer::Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> 
 
 			*(gpuBuffer + cnt++) = float4_2_uint32(clampedClr); 
 		}
-	}
+	} 
 } 
 
 void SoftwareRasterizer::Rasterize()

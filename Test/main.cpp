@@ -20,6 +20,8 @@
 	#endif
 #endif
 
+//以下为两种用法
+
 /*//Demo of inheritance
 
 class TestApp
@@ -51,9 +53,9 @@ public:
 
 protected:
 
-	void GameApp_OnApplicationInitialized(void *sender, AppStartupEventArgs e);
+	void GameApp_OnApplicationInitialized(void *sender, ApplicationEventArgs e);
 
-	void GameApp_OnApplicationRender(void *sender, ApplicationRenderEventArgs e);
+	void GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e);
 
 protected:
 
@@ -66,7 +68,7 @@ GameAppDelegate::GameAppDelegate()
 {
 	app.ApplicationInitialized += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
 	app.ApplicationRender += MakeCCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
-	//app.ApplicationUpdate += MakeCCallback2();
+  
 	//app.GetMainWindow()->WindowRender += MakeCCallback2(&GameAppDelegate::GameApp_OnWindowRender);
  	
 	app.Run();
@@ -77,26 +79,22 @@ GameAppDelegate::~GameAppDelegate()
 	
 } 
 
-void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, AppStartupEventArgs e)
+void GameAppDelegate::GameApp_OnApplicationInitialized(void *sender, ApplicationEventArgs e)
 { 
 	//test for resource loading
 	mesh = new XIRE::SwMesh(S("C:/dev/SoftRenderer/bin64/media/ModelViewer/teapot.obj"));
 	XIRE::Application *app = (XIRE::Application*)sender;
+
+	app->AddWindow(S("Window2"),1024,768);
+
 	app->GetMainWindow()->AddDrawable(mesh);
+	app->GetWindow(S("Window2"))->AddDrawable(mesh);
+	
 }
 
-void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationRenderEventArgs e)
+void GameAppDelegate::GameApp_OnApplicationRender(void *sender, ApplicationEventArgs e)
 { 
-	e.Data->window->camera->Rotate(0.01f, 0.0f, 0.0f); 
-	 
-//	//draw all mesh into 3d space
-//
-	//XIRE::Graphics *g = e.Data->window->getRender();
-	//XIRE::Graphics *g = ((XIRE::Window*)sender)->GetRender();
-	//g->Draw(mesh);
-//
-//	//mesh->Draw(g);
-//	//mesh->Draw(e.Data->window->GetRender());
+	e.Data->window->getCamera()->Rotate(0.01f, 0.0f, 0.0f); 
 }
  
 int main(int argc, char** argv)

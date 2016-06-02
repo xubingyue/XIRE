@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <algorithm>
 
 NS_Using(XIRE)
 
@@ -9,9 +10,7 @@ Application::Application(String title, U32 width, U32 height)
 {
 	handleApp = ::GetModuleHandle(NULL);
 
-	mainWindow = AddWindow(title, width, height);
-	mainWindow->WindowRender += MakeCCallback2(&Application::OnWindowRender);
-	mainWindow->Show();
+	AddWindow(title, width, height);
 }
  
 Application::~Application()
@@ -25,8 +24,21 @@ Application::~Application()
 }
 
 Window* Application::GetMainWindow()
-{
+{ 
 	return mainWindow;
+}
+
+Window* Application::GetWindow(String title)
+{
+	for (int i = 0; i < windows.size(); ++i)
+	{
+		if (windows[i]->Name == title)
+		{
+			return windows[i];
+		}
+	}
+
+	return nullptr;
 }
 
 HINSTANCE Application::GetAppHandle()
@@ -40,13 +52,21 @@ HINSTANCE Application::GetAppHandle()
 }
 
 void Application::AddWindow(Window* window)
-{
+{ 
+	window->WindowRender += MakeCCallback2(&Application::OnWindowRender);
+	window->WindowClosed += MakeCCallback2(&Application::OnWindowClosed);
+	window->Show();
+
 	windows.push_back(window);
+
+	if (mainWindow == nullptr)
+		mainWindow = windows.front();
 }
 
 Window* Application::AddWindow(String title, U32 width, U32 height)
 {
-	Window* window = new Window(this->GetAppHandle(), title, width, height);
+	Window* window = new Window(this->GetAppHandle(), title, width, height); 
+
 	AddWindow(window);
 
 	return window;
@@ -74,11 +94,8 @@ void Application::Run()
 		}
 		else
 		{
-			//render & update here
-			
-			OnApplicationUpdate();
-			OnApplicationBeginFrame();
-			OnApplicationEndFrame();
+			//render & update here 
+			OnApplicationUpdate(); 
 			OnApplicationRender(); 
 		}
 	}
@@ -110,17 +127,7 @@ void Application::OnApplicationDestroy()
 void Application::OnApplicationUpdate()
 {
 
-}
-
-void Application::OnApplicationBeginFrame()
-{
-
-}
-
-void Application::OnApplicationEndFrame()
-{
-
-}
+}  
 
 void Application::OnApplicationRender()
 {
@@ -130,10 +137,41 @@ void Application::OnApplicationRender()
 	}
 }
 
-void Application::OnWindowRender(void* sender, RenderEventArgs e)
+void Application::Exit(bool force)
+{
+	if (force == false)
+	{
+		::PostQuitMessage(0);
+	}
+	else
+	{
+		TerminateProcess(handleApp, 0);
+	} 
+}
+
+void Application::OnWindowRender(void* sender, WindowEventArgs e)
 {
 	if (!ApplicationRender.IsNull())
 	{
-		ApplicationRender(this,  &AppRenderEvent(mainWindow));  
+		ApplicationRender(this,  &ApplicationEvent((Window*)sender));  
 	}
+}
+
+void Application::OnWindowClosed(void* sender, WindowEventArgs e)
+{
+	Window* wnd = (Window*)sender;
+
+	auto itr = std::find(windows.begin(), windows.end(), wnd);
+	windows.erase(itr);
+
+	if (windows.size() == 0)
+	{
+		this->Exit();
+		return;
+	}
+
+	if (wnd == mainWindow)
+	{
+		mainWindow = windows.front();
+	}  
 }
