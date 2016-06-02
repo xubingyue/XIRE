@@ -40,19 +40,9 @@ public:
 
 	void Clear(); 
 
-	void Translate(
-		void *vIn, 
-		const core::Vectorf3& pos, 
-		F32 scale, 
-		void **vOut); 
+	void Translate(void *vIn,const core::Vectorf3& pos, F32 scale, void **vOut); 
 
-	void PerspectiveProj(
-		void *vIn,
-		F32 aspectRadio,
-		F32 fov,
-		F32 znear,
-		F32 zfar, 
-		void **vOut);
+	void PerspectiveProj(void *vIn,	F32 aspectRadio, F32 fov, F32 znear, F32 zfar, void **vOut);
 
 	void ScreenProj(void *vIn, void **vOut);
 

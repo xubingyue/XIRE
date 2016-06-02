@@ -39,8 +39,6 @@ public:
 	void OnUpdate();
 
 	void OnRender();
-
-	void AddDrawable(Drawable *drawable);
  
 	WindowEventHandler WindowRender;
 
@@ -70,7 +68,7 @@ protected:
 
 	Camera *camera;
 
-	std::vector<Drawable*> drawObjectList; 
+	//std::vector<Drawable*> drawObjectList; 
 
 public:
 
@@ -90,8 +88,7 @@ public:
 	int FullscrWidth;
 	int FullscrHeight;
 
-
-	String Title; 
+	String Title;
 };
 
 NS_End(XIRE)

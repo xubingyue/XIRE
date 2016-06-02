@@ -16,7 +16,7 @@ SoftwareRasterizer::SoftwareRasterizer(U32 bufferWidth,U32 bufferHeight)
 
 SoftwareRasterizer::~SoftwareRasterizer()
 {
-	 
+	SafeDelete(backbuffer);
 }
 
 void SoftwareRasterizer::CreateBuffer(U32 bufferWidth, U32 bufferHeight)
@@ -103,10 +103,7 @@ void SoftwareRasterizer::Flush(U32 *gpuBuffer, std::vector<SwRenderPrimitive *> 
 	for (int i = 0; i < buffer.size(); ++i)
 	{
 		buffer[i]->pos /= buffer[i]->pos.z;
-
-		/*U32 px = (buffer[i]->pos.x + 1)* width / w;
-		U32 py = height - (buffer[i]->pos.y + 1)*height / h;*/
-
+ 
 		U32 px = (buffer[i]->pos.x+1) * width / w;
 		U32 py = (buffer[i]->pos.y+1) * height / h;
 

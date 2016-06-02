@@ -11,7 +11,7 @@ SwSurface::SwSurface(String _name, int _width, int _height, int _bpp)
 	pitch = bpp * width;
 
 	data = (U8*)MemoryPool::Get()._mm_malloc_16byte(pitch * height, 16);
-	memset(data, 0, pitch*height);
+	memset(data, 0, pitch * height);
 }
 
 
