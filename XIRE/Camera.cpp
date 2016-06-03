@@ -24,9 +24,7 @@ Camera::Camera(void *parentWindow, const core::Vectorf3 &pos,
 
 	zNear = znear;
 	zFar = zfar;
-
-	//LookAt(lookat);
-
+ 
 	MarkDirty();
 
 	Update();
@@ -114,7 +112,7 @@ void Camera::Update()
 	quat.Normalize(); 
 	
 	cameraMatrix = Transform::CameraMatrixLH(position, position + quat.GetRow2(), up);
- 
+
 	projectMatrix = Transform::PerspectiveMatrixLH(aspect, fov, zNear, zFar);
 
 	core::Vectorf3 lookAt = quat.GetRow2();

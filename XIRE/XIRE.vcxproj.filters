@@ -99,6 +99,9 @@
     <ClInclude Include="Quaternion.h">
       <Filter>core\math</Filter>
     </ClInclude>
+    <ClInclude Include="D3D9Driver.h">
+      <Filter>renderer\d3d9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -149,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
       <Filter>core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D9Driver.cpp">
+      <Filter>renderer\d3d9</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

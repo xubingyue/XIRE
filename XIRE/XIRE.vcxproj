@@ -161,6 +161,7 @@
     <ClInclude Include="AssetManager.hpp" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Const.hpp" />
+    <ClInclude Include="D3D9Driver.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
@@ -201,6 +202,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="D3D9Driver.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="EventArgs.cpp" />
     <ClCompile Include="EventHandler.cpp" />
