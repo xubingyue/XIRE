@@ -83,6 +83,13 @@ void Camera::Rotate(F32 yaw, F32 pitch, F32 roll)
 	Quaternion qRoll  = Quaternion::CreateRotationY(roll);
 	Quaternion qYaw   = Quaternion::CreateRotationX(yaw);
 	Quaternion qPitch = Quaternion::CreateRotationZ(pitch);
+	
+	//qRoll.Normalize();
+
+	//auto qRolli = qRoll.GetInverted();
+
+	//quat = qRoll * quat * qRolli;
+	//printf("%lf %lf %lf %lf %lf %lf %lf %lf\n", qRolli.x, qRolli.y, qRolli.z,qRolli.w, quat.x, quat.y, quat.z, quat.w);
 
 	quat = quat * qRoll;
 	quat = qYaw * quat;
@@ -107,7 +114,7 @@ void Camera::Update()
 
 	Window* parentWindow = (Window*)Parent;
 
-	F32 aspect = parentWindow->Width/parentWindow->Height; 
+	F32 aspect = parentWindow->Width*0.f/parentWindow->Height; 
 
 	quat.Normalize(); 
 	

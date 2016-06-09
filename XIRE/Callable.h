@@ -7,29 +7,27 @@
 #include <map>
 #include <vector>
 
-NS_Begin(XIRE)  
-
-class EventListener;
-
-typedef std::vector<EventListener*> EventListenerArray;
-
-typedef std::map<EventType, EventListenerArray> EventRegistry;
-
-class XIREAPI EventListener : public Root
+NS_Begin(XIRE)   
+ 
+class XIREAPI Callable : public Root
 {
 public:
  
-	EventListener(void *parent = nullptr);
+	typedef std::vector<Callable*> CallableArray;
 
-	virtual ~EventListener(); 
+	typedef std::map<EventType, CallableArray> EventRegistry;
 
-	void RegisterEventListener(const U32 &type = ET_KeyBoardEvent | ET_MouseEvent | ET_MiscEvent);
+	Callable(void *parent = nullptr);
 
-	void RemoveEventListener(const U32 &type = ET_KeyBoardEvent | ET_MouseEvent | ET_MiscEvent);
-	 
+	virtual ~Callable(); 
+
+	void RegisterEventType(const U32 &type = ET_KeyboardEvent | ET_MouseEvent );
+
+	void RemoveEventType(const U32 &type = ET_KeyboardEvent | ET_MouseEvent ); 
+
 	void RaiseEvent(IEvent e);
 
-	static void DispatchEvent(EventListenerArray array, IEvent e);
+	static void DispatchEvent(CallableArray array, IEvent e);
 
 public:
 
@@ -89,7 +87,26 @@ public:
 
 	KeyUpHandler KeyUp;
 
+public:
+
+	virtual void AddChild(Callable *drawable);
+
+	std::vector<Callable*> ChildContainer;
+
+protected: 
+
+	//生成对象的事件注册件表
+	void UpdateEventRegistry();
+
+	void UpdateEventRegistry(Callable* callable);
+
+	void RegisterEvent(EventType type, Callable *component);
+
+	void UnregisterEvent(EventType type, Callable *component);
+
 protected:
+
+	EventRegistry eventRegistry;
 
 	U32 registeredEventType;
 

@@ -1,6 +1,6 @@
 #include "D3D9Driver.h"
 
-//SwDriver implementation
+//DirectX 9 Driver implementation
 //(c)2016 Sekkit,LLC.
 
 #include "D3D9Driver.h"
@@ -28,13 +28,11 @@ D3D9Driver::~D3D9Driver()
 
 void D3D9Driver::BeginFrame()
 {
-	/*
 	if (d3ddev != nullptr)
 	{
-	d3ddev->Clear(NULL, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0);
-	d3ddev->BeginScene();
+		d3ddev->Clear(NULL, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0);
+		d3ddev->BeginScene();
 	}
-	*/
 }
 
 void D3D9Driver::EndFrame()
@@ -71,6 +69,11 @@ void D3D9Driver::EndFrame()
 
 	backSurface->UnlockRect();
 
+	if (d3ddev != nullptr)
+	{
+		d3ddev->EndScene();
+	}
+
 	Clear();
 }
 
@@ -98,19 +101,16 @@ bool D3D9Driver::StartupRender()
 	D3DCAPS9 caps;
 	d3d->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps);
 
-	DWORD vertexProcessing = 0;
-	if (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
+	DWORD vertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING;
+
+	/*if (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
 	{
-		vertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING;
-		/*if (caps.DevCaps & D3DDEVCAPS_PUREDEVICE)
-		{
-		vertexProcessing |= D3DCREATE_PUREDEVICE;
-		}*/
+		vertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING; 
 	}
 	else
 	{
 		vertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
-	}
+	}*/
 
 	HRESULT r = d3d->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
@@ -147,7 +147,7 @@ bool D3D9Driver::BuildParameters()
 
 	pp.BackBufferFormat = displayMode.Format;
 	pp.BackBufferCount = 1;
-	pp.MultiSampleType = D3DMULTISAMPLE_NONE;//D3DMULTISAMPLE_4_SAMPLES;
+	pp.MultiSampleType = D3DMULTISAMPLE_NONE; 
 	pp.MultiSampleQuality = 0;
 	pp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	pp.hDeviceWindow = window->GetWindowHandle();

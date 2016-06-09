@@ -1,9 +1,7 @@
 #pragma once
 
 #include "RenderBase.h"
-
 #include <d3d9.h>
-
 #include <list>
 
 #pragma comment(lib,"d3d9.lib")

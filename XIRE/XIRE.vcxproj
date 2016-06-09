@@ -165,7 +165,7 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="EventListener.h" />
+    <ClInclude Include="Callable.h" />
     <ClInclude Include="IndexBuffer.hpp" />
     <ClInclude Include="Material.hpp" />
     <ClInclude Include="Matrixf44.h" />
@@ -206,7 +206,7 @@
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="EventArgs.cpp" />
     <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="EventListener.cpp" />
+    <ClCompile Include="Callable.cpp" />
     <ClCompile Include="Matrixf44.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="Quaternion.cpp" />

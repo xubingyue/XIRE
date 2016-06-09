@@ -52,6 +52,7 @@ XIRE_ALIGN struct Quaternion
 		if (bNorm) Normalize();
 		assert(IsValid());
 	}
+
 	Quaternion(float angle, const Vectorf3 &axis) : w(angle), v(axis) {};
 
 	// 四元数 单乘

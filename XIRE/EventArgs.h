@@ -8,13 +8,23 @@ NS_Begin(XIRE)
 class Graphics;
 class Window;
 
+
+//bitwise-shift number limits to 32
 enum XIREAPI EventType
 {
-	ET_KeyBoardEvent = 0x1,
-	ET_MouseEvent = 0x1 << 1,
-	ET_MiscEvent = 0x1 << 2,
-	ET_WindowEvent = 0x1<<3,
-	ET_ApplicationEvent = 0x1<<4
+	ET_UNKNOWN					 = 0x1<<0,
+	ET_MouseEvent				 = 0x1<<1,
+	ET_MouseMoveEvent			 = 0x1<<2,
+	ET_MouseLeftDownEvent		 = 0x1<<3,
+	ET_MouseRightDownEvent		 = 0x1<<4,
+	ET_MouseMiddleDownEvent		 = 0x1<<5,
+	ET_MouseWheelEvent			 = 0x1<<6,
+	ET_MouseLeftDoubleClickEvent = 0x1<<7,
+	ET_KeyboardEvent			 = 0x1<<8,
+	ET_KeydownEvent				 = 0x1<<9,
+	ET_KeyupEvent				 = 0x1<<10,
+	ET_WindowEvent				 = 0x1<<11,
+	ET_ApplicationEvent			 = 0x1<<12 
 };
 
 struct XIREAPI IEvent
@@ -73,7 +83,7 @@ struct XIREAPI KeyEvent : public IEvent
 {
 	KeyEvent()
 	{
-		type = ET_KeyBoardEvent;
+		type = ET_KeyboardEvent;
 	}
 
 	U8 keycode;

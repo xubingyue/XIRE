@@ -1,14 +1,14 @@
 #pragma once
 
 #include "XIRE_Afx.h"
-#include "EventListener.h"
+#include "Callable.h"
 #include "Vectorf3.hpp"
 #include "Matrixf44.h"
 #include "Quaternion.h"
 
 NS_Begin(XIRE) 
 
-class XIREAPI Camera: public EventListener
+class XIREAPI Camera: public Callable
 {
 public:
 	enum CameraMode

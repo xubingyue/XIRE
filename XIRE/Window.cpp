@@ -9,6 +9,8 @@ NS_Using(XIRE)
 Window::Window(HINSTANCE hInstance,String title, int w, int h)
 	: fullscreen(false), Width(1024), Height(768)
 {
+	RegisterEventType(ET_MouseEvent | ET_KeyboardEvent | ET_ApplicationEvent);
+
 	Name = title;
 
 	handleApp = hInstance;
@@ -21,6 +23,8 @@ Window::Window(HINSTANCE hInstance,String title, int w, int h)
 	FullscrHeight = ::GetSystemMetrics(SM_CYSCREEN);
 
 	Create(); 
+
+ 	UpdateEventRegistry();
 }
 
 Window::~Window()
@@ -159,7 +163,14 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONDOWN:
 	{ 
 		/*camera->Rotate(0.0f, 0.0f, -0.19f); */
-	}break;
+	} break;
+	case WM_MOUSEMOVE:
+	{
+		MouseEvent data;
+		data.type = ET_MouseMoveEvent;
+		DispatchEvent(eventRegistry[ET_MouseEvent], data);
+
+	} break;
 	case WM_KEYUP:
 	{
 		if (wParam == VK_ESCAPE)
@@ -169,27 +180,17 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		else if (wParam == VK_F11)
 		{
 			ToggleFullscreen();
-		}
-		else if (wParam >= 'A' && wParam <= 'Z')
-		{
-			printf("KEYUP:%d\n", wParam);
 		} 
 	}
 	break;  
 	case WM_KEYDOWN:
-	{
-		if (wParam >= 'A' && wParam <= 'Z')
-		{
-
-		}
-
+	{ 
 		KeyEvent data;
 		data.IsPressed = true;
 		data.keycode = wParam;
-
-		//KeyEventArgs e(&data);
-
-		EventListener::DispatchEvent(eventRegistry[ET_KeyBoardEvent], data);
+		data.type = ET_KeydownEvent;
+ 
+		DispatchEvent(eventRegistry[ET_KeyboardEvent], data);
 
 	} break;
 	case WM_CLOSE:

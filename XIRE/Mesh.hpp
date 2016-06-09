@@ -14,6 +14,8 @@ public:
 
 	SwMesh(String filename)
 	{
+		RegisterEventType(ET_KeyboardEvent | ET_MouseEvent);
+
 		primitives.clear();
 		LoadFromObj(filename);
 	}

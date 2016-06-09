@@ -53,8 +53,8 @@ typedef INT64  S64;
 typedef INT32  S32;
 typedef INT16  S16;
 typedef INT8   S8;
-typedef FLOAT  F32; 
+typedef FLOAT  F32;
 
 #define XIRE_ALIGN _CRT_ALIGN(16)
 
-#define EQUAL_EPSILON 0.001f  
+#define EQUAL_EPSILON 0.001f
