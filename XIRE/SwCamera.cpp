@@ -1,11 +1,11 @@
-#include "Camera.h"
+#include "SwCamera.h"
 #include "Window.h"
 #include "Transform.h"
 
 NS_Using(XIRE)
 NS_Using(core)
 
-Camera::Camera(void *parentWindow, const core::Vectorf3 &pos,
+SwCamera::SwCamera(void *parentWindow, const core::Vectorf3 &pos,
 	/*const core::Vectorf3 &lookat,*/
 	const core::Quaternion &rot,
 	const core::Vectorf3 &updir,
@@ -30,101 +30,90 @@ Camera::Camera(void *parentWindow, const core::Vectorf3 &pos,
 	Update();
 }
 
-Camera::~Camera()
+SwCamera::~SwCamera()
 {
 
 }
 
-void Camera::setFov(F32 angle)
+void SwCamera::setFov(F32 angle)
 {
 	fov = angle;
 	MarkDirty();
 }
 
-void Camera::setPosition(const core::Vectorf3& point)
+void SwCamera::setPosition(const core::Vectorf3& point)
 {
 	position = point;
 
 	MarkDirty();
 }
 
-void Camera::LookAt(const core::Vectorf3& point)
+void SwCamera::LookAt(const core::Vectorf3& point)
 {
 	//lookAtDir = point; 
 	MarkDirty();
 }
 
-void Camera::ResetLookAt()
+void SwCamera::Reset()
 {
 	LookAt(core::Vectorf3(0.f, 0.f, 1.f));
 }
 
 //XIRE is based on LH(left hand) coordinate system!
 
-core::Matrixf44 &Camera::getCameraMatrix()
+core::Matrixf44 &SwCamera::getCameraMatrix()
 {
 	if (isDirty)
 	{
 		Update();
 	}
 
-	return cameraMatrix; 
+	return cameraMatrix;
 }
 
-void Camera::Move(const core::Vectorf3& point)
+void SwCamera::Move(const core::Vectorf3& point)
 {
 	position += (point * quat);
 
 	MarkDirty();
 }
 
-void Camera::Rotate(F32 yaw, F32 pitch, F32 roll)
+void SwCamera::Rotate(F32 yaw, F32 pitch, F32 roll)
 {
 	Quaternion qRoll  = Quaternion::CreateRotationY(roll);
 	Quaternion qYaw   = Quaternion::CreateRotationX(yaw);
 	Quaternion qPitch = Quaternion::CreateRotationZ(pitch);
-	
-	//qRoll.Normalize();
-
-	//auto qRolli = qRoll.GetInverted();
-
-	//quat = qRoll * quat * qRolli;
-	//printf("%lf %lf %lf %lf %lf %lf %lf %lf\n", qRolli.x, qRolli.y, qRolli.z,qRolli.w, quat.x, quat.y, quat.z, quat.w);
-
-	quat = quat * qRoll;
-	quat = qYaw * quat;
+	 
+	quat = qRoll * quat * qRoll.GetInverted();
+	//quat = qYaw * quat;
 	 
 	MarkDirty();
 }
 
-void Camera::MarkDirty()
+void SwCamera::MarkDirty()
 {
 	isDirty = true;
 }
 
-core::Vectorf3 Camera::getPosition()
+core::Vectorf3 SwCamera::getPosition()
 {
 	return position;
 }
 
-void Camera::Update()
+void SwCamera::Update()
 {
-	if (Parent == NULL)
+	if (Parent == nullptr)
 		return;
 
 	Window* parentWindow = (Window*)Parent;
 
-	F32 aspect = parentWindow->Width*0.f/parentWindow->Height; 
+	F32 aspect = parentWindow->Width * 0.f/parentWindow->Height; 
 
-	quat.Normalize(); 
+	//quat.Normalize();
 	
 	cameraMatrix = Transform::CameraMatrixLH(position, position + quat.GetRow2(), up);
 
 	projectMatrix = Transform::PerspectiveMatrixLH(aspect, fov, zNear, zFar);
-
-	core::Vectorf3 lookAt = quat.GetRow2();
-
-	lookAt.normalize(); 
-
+ 
 	isDirty = false;
 }

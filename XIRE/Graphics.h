@@ -10,17 +10,33 @@ class Window;
 class RenderBase;
 class SwPrimitive;
 
-static Text gDriverPriority[]  = { S("D3D12Driver"),S("VulkanDriver"),S("D3D11Driver"),S("D3D10Driver") ,S("D3D9Driver") ,S("OpenGLDriver"),S("SoftwareDriver") };
+static Text gDriverPriority[]  = { S("D3D9Driver") ,S("D3D10Driver") ,S("D3D11Driver"),S("D3D12Driver"),S("OpenGLDriver"),S("VulkanDriver"),S("SoftwareDriver") };
+
+enum E_RENDER_DRIVER
+{ 
+	E_D3D9Driver = 0,
+	E_D3D10Driver,
+	E_D3D11Driver,
+	E_D3D12Driver,
+	E_OpenGLDriver,
+	E_VulkanDriver,
+	E_SoftwareDriver
+};
+
+static String GetRenderDriverAlias(E_RENDER_DRIVER eFlag)
+{ 
+	return gDriverPriority[(S32)eFlag];
+}
 
 class XIREAPI Graphics
 {
 public:
 
-	explicit Graphics(Window* _window);
+	explicit Graphics(Window* _window, E_RENDER_DRIVER driverFlag);
 
 	virtual ~Graphics();
 	 
-	RenderBase *LoadDriver(String driverName);
+	RenderBase *LoadDriver(E_RENDER_DRIVER driverFlag = E_D3D9Driver);
 
 	RenderBase *GetDriver();
 
@@ -28,9 +44,9 @@ public:
 
 	bool Shutdown();
 
-	void BeginFrame();
+	bool BeginFrame();
 
-	void EndFrame();
+	bool EndFrame();
 
 	void Swap();
 
@@ -39,6 +55,8 @@ public:
 	void DrawPrimitive(SwPrimitive *primitive);
 
 	void ResetDefaultDriver();
+
+	void Print();
 
 protected:
 

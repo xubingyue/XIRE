@@ -74,6 +74,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin32\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\dxsdk\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;C:\dxsdk\lib\x86;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -159,13 +161,17 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="AssetManager.hpp" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="D3D9Camera.h" />
+    <ClInclude Include="D3D9VertexBuffer.h" />
+    <ClInclude Include="GpuObject.h" />
+    <ClInclude Include="SwCamera.h" />
     <ClInclude Include="Const.hpp" />
     <ClInclude Include="D3D9Driver.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Callable.h" />
+    <ClInclude Include="ICamera.hpp" />
     <ClInclude Include="IndexBuffer.hpp" />
     <ClInclude Include="Material.hpp" />
     <ClInclude Include="Matrixf44.h" />
@@ -193,7 +199,6 @@
     <ClInclude Include="Vectorf4.h" />
     <ClInclude Include="Vertex.hpp" />
     <ClInclude Include="VertexBuffer.hpp" />
-    <ClInclude Include="Viewport.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="XIRE.h" />
     <ClInclude Include="XIRE_Afx.h" />
@@ -201,7 +206,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="D3D9Camera.cpp" />
+    <ClCompile Include="D3D9VertexBuffer.cpp" />
+    <ClCompile Include="GpuObject.cpp" />
+    <ClCompile Include="SwCamera.cpp" />
     <ClCompile Include="D3D9Driver.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="EventArgs.cpp" />
@@ -220,7 +228,6 @@
     <ClCompile Include="SwSurface.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector4f.cpp" />
-    <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

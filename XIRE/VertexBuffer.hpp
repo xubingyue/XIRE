@@ -6,6 +6,7 @@
 #include "Vertex.hpp"
 
 NS_Begin(XIRE)
+ 
 
 XIRE_ALIGN
 struct XIREAPI SwVertexBuffer
@@ -36,7 +37,7 @@ struct XIREAPI SwVertexBuffer
 
 	static SwVertexBuffer* Allocate(U32 elementSize, U32 count)
 	{
-		SwVertexBuffer* vb = new SwVertexBuffer;
+		SwVertexBuffer* vb = new SwVertexBuffer();
 		vb->size = elementSize;
 		vb->count = count;
 		vb->data = (U8*)(MemoryPool::Get()._mm_malloc_16byte(vb->size * count, 16));

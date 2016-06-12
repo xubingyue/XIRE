@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "SwCamera.h"
 
 NS_Begin(XIRE)
 
@@ -12,7 +12,7 @@ public:
 
 	virtual ~Scene();
 
-	Camera* CreateCamera(); 
+	SwCamera* CreateCamera(); 
 
 };
 

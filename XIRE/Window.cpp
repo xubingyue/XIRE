@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "RenderBase.h"
 #include "Drawable.h"
-#include "Camera.h"
+#include "D3D9Camera.h"
 
 NS_Using(XIRE) 
 
@@ -15,11 +15,11 @@ Window::Window(HINSTANCE hInstance,String title, int w, int h)
 
 	handleApp = hInstance;
 
-	Title = title;
-	Width = w;
+	Title  = title;
+	Width  = w;
 	Height = h;
 
-	FullscrWidth = ::GetSystemMetrics(SM_CXSCREEN);
+	FullscrWidth  = ::GetSystemMetrics(SM_CXSCREEN);
 	FullscrHeight = ::GetSystemMetrics(SM_CYSCREEN);
 
 	Create(); 
@@ -45,18 +45,19 @@ void Window::OnUpdate()
 
 void Window::OnRender()
 {   
-	g->BeginFrame();
-	 
-	this->Draw(g);
-	 
-	if (!WindowRender.IsNull())
+	if (g->BeginFrame())
 	{
-		WindowRender(this, NULL);
-	}
-	
-	g->EndFrame(); 
+		this->Draw(g);
 
-	g->Swap();
+		if (!WindowRender.IsNull())
+		{
+			WindowRender(this, NULL);
+		}
+
+		g->EndFrame();
+
+		g->Swap();
+	}
 }
 
 bool Window::Create()
@@ -115,9 +116,12 @@ bool Window::Create()
 		return false;
 	}
 
-	g = new Graphics((Window*)this); 
+	//g = new Graphics((Window*)this,E_D3D9Driver);
 
-	camera = new Camera(this,core::Vectorf3(0.f,0.f,0.f),core::Quaternion::CreateIdentity());
+	g = new Graphics((Window*)this, E_D3D9Driver);
+
+	//camera = new D3D9Camera(this,core::Vectorf3(0.f,0.f,0.f),core::Quaternion::CreateIdentity());
+	camera = new D3D9Camera(this);
 
 	return true;
 }
@@ -175,7 +179,7 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		if (wParam == VK_ESCAPE)
 		{
-			//::PostQuitMessage(0);
+			 
 		}
 		else if (wParam == VK_F11)
 		{
@@ -220,7 +224,7 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void Window::Reset()
 {
 	if (g != nullptr)
-	{ 
+	{  
 		g->GetDriver()->Reset(); 
 	}
 }
@@ -255,7 +259,7 @@ void Window::ToggleFullscreen()
 
 		SetWindowLongPtr(handleWindow, GWL_STYLE, WS_EX_TOPMOST);
 	}
- 
+	 
 	Reset(); 
 
 	if (!fullscreen)

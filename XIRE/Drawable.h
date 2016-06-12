@@ -5,7 +5,7 @@
 #include "Primitive.hpp"
 #include <map>
 
-NS_Begin(XIRE) 
+NS_Begin(XIRE)
 
 class Graphics;
 
@@ -17,8 +17,16 @@ public:
 
 	virtual ~Drawable();
 
-	virtual void Draw(Graphics* g); 
+	virtual void Draw(Graphics* g);
 	 
+public:
+
+	union
+	{
+		core::Vectorf3 position;
+		S32 x, y, z;
+	};
+
 protected:
 
 	std::vector<SwPrimitive> primitives;

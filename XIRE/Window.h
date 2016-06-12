@@ -10,7 +10,7 @@
 NS_Begin(XIRE)
 
 class Graphics; 
-class Camera;
+class D3D9Camera;
 
 class XIREAPI Window : public Drawable 
 { 
@@ -66,13 +66,13 @@ protected:
 
 	bool fullscreen;
 
-	Camera *camera;
+	D3D9Camera *camera;
 
 public:
 
 	Graphics *getRender() { return g; }
 
-	Camera* getCamera() { return camera; }
+	D3D9Camera* getCamera() { return camera; }
 
 	HWND GetWindowHandle();
 

@@ -11,9 +11,9 @@ class RenderBase : public Root
 {
 public: 
 
-	virtual void BeginFrame() = 0;
+	virtual bool BeginFrame() = 0;
 
-	virtual void EndFrame() = 0;
+	virtual bool EndFrame() = 0;
 
 	virtual bool StartupRender() = 0;
 

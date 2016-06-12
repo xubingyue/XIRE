@@ -3,16 +3,16 @@
 #include "RenderBase.h"
 #include <d3d9.h>
 #include <list>
+#include "D3D9VertexBuffer.h"
+#include "VertexBuffer.hpp"
 
-#pragma comment(lib,"d3d9.lib")
+#pragma comment(lib,"d3d9.lib") 
 
-NS_Begin(XIRE)
-
-class SwVertexBuffer;
+NS_Begin(XIRE) 
 
 class Window;
 
-class D3D9Driver : public RenderBase
+class XIREAPI D3D9Driver : public RenderBase
 {
 public:
 
@@ -20,9 +20,9 @@ public:
 
 	~D3D9Driver();
 
-	void BeginFrame() override;
+	bool BeginFrame() override;
 
-	void EndFrame() override;
+	bool EndFrame() override;
 
 	bool StartupRender();
 
@@ -40,19 +40,17 @@ public:
 
 protected:
 
-	IDirect3D9 *d3d;
+	IDirect3D9 *d3d_;
 
-	IDirect3DDevice9 *d3ddev;
+	IDirect3DDevice9 *d3ddev_;
 
-	D3DPRESENT_PARAMETERS pp;
-
-	bool windowed;
-
-	Window *window;
+	D3DPRESENT_PARAMETERS pp_;
+ 
+	Window *window_;
 	 
-	IDirect3DSurface9 *backSurface;
+	IDirect3DSurface9 *backSurface_;
 
-	std::list<SwVertexBuffer*> vertexRenderQueue;
+	std::list<SwVertexBuffer*> vertexRenderQueue_;
 };
 
 NS_End(XIRE)

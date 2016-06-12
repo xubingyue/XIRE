@@ -12,7 +12,7 @@
 
 NS_Begin(XIRE)
 
-class SwVertexBuffer;
+class VertexBuffer;
 
 class SoftwareDriver : public RenderBase
 {
@@ -22,9 +22,9 @@ public:
 
 	virtual ~SoftwareDriver();  
 
-	void BeginFrame() override;
+	bool BeginFrame() override;
 
-	void EndFrame() override;
+	bool EndFrame() override;
 
 	bool StartupRender();
 

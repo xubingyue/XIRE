@@ -23,7 +23,7 @@ public:
 	void LoadFromObj(String filepath)
 	{
 		ObjLoader loader;
-		io::Memfile memfile;   
+		io::Memfile memfile;
 		loader.LoadGeometryFromObj(filepath, primitives);
 
 		return;
@@ -48,6 +48,7 @@ public:
 		std::copy(wstr.begin(), wstr.end(), str.begin());
 		return str;
 	}
+
 };
 
 NS_End(XIRE)

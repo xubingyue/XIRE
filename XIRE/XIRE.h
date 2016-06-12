@@ -16,5 +16,6 @@
 #include "Vertex.hpp"
 #include "Transform.h"
 #include "MemoryPool.h"
-#include "Camera.h"
+#include "SwCamera.h"
+#include "D3D9Camera.h"
 #include "Callable.h"

@@ -12,7 +12,7 @@ Scene::~Scene()
 
 }
 
-Camera* Scene::CreateCamera()
+SwCamera* Scene::CreateCamera()
 {
 	return NULL;
 }

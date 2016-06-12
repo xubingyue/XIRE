@@ -44,6 +44,7 @@ NS_End(XIRE)
 
 #define SafeDelete(l) {if((l)!=NULL){delete (l);(l)=NULL;}}
 #define SafeRelease(l) {if((l)!=NULL){(l)->Release();(l)=NULL;}}
+#define SafeDeleteArray(l){if((l)!=NULL){delete [] (l);(l)=NULL;}}
 
 typedef UINT64 U64;
 typedef UINT32 U32;

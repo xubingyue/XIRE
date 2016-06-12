@@ -5,7 +5,7 @@
 
 NS_Begin(XIRE)
 
-class SwVertexBuffer;  
+class VertexBuffer;  
  
 NS_Begin(core)
 class Matrixf44;  

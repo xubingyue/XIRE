@@ -2,17 +2,31 @@
 #include "SoftwareDriver.h" 
 #include "Window.h"
 #include "Primitive.hpp"
+#include "D3D9Driver.h"
 
 NS_Using(XIRE)
 
-Graphics::Graphics(Window *_window)
+Graphics::Graphics(Window *_window, E_RENDER_DRIVER driverFlag)
 {
 	window = _window; 
 
-	int drvIndex = 0;
-	while ((currentDriver = LoadDriver(gDriverPriority[drvIndex]))==NULL)
+	currentDriver = LoadDriver(driverFlag);
+
+	if (currentDriver == NULL)
 	{
-		++drvIndex;
+		printf("%s not found, loading default driver instead...\n", GetRenderDriverAlias(driverFlag));
+
+		int drvIndex = 0;
+		while (drvIndex <= E_SoftwareDriver && (currentDriver = LoadDriver(E_RENDER_DRIVER(drvIndex))) == NULL)
+		{
+			++drvIndex;
+		}
+	} 
+	
+	if (currentDriver == NULL)
+	{
+		printf("No graphics driver available. now exit\n", GetRenderDriverAlias(driverFlag));
+		return;
 	}
 
 	this->Startup();
@@ -23,34 +37,32 @@ Graphics::~Graphics()
 	SafeDelete(currentDriver); 
 }
 
-RenderBase* Graphics::LoadDriver(String driverName)
+RenderBase* Graphics::LoadDriver(E_RENDER_DRIVER driverFlag)
 { 
-	//T("D3D12Driver"),T("VulkanDriver"),T("D3D11Driver"),T("D3D10Driver") ,T("D3D9Driver") ,T("OpenGLDriver"),T("SoftwareDriver")
-	if (driverName == S("D3D12Driver"))
+ 	if (driverFlag == E_D3D12Driver)
 	{
 		
 	}
-	else if (driverName == S("VulkanDriver"))
+	else if (driverFlag == E_D3D11Driver)
 	{
 
 	}
-	else if (driverName == S("D3D11Driver"))
+	else if (driverFlag == E_D3D10Driver)
 	{
 
 	}
-	else if (driverName == S("D3D10Driver"))
+	else if (driverFlag == E_D3D9Driver)
+	{
+		return new D3D9Driver(window); 
+	}
+	else if (driverFlag == E_VulkanDriver)
+	{
+	}
+	else if (driverFlag == E_OpenGLDriver)
 	{
 
 	}
-	else if (driverName == S("D3D9Driver"))
-	{
-
-	}
-	else if (driverName == S("OpenGLDriver"))
-	{
-
-	}
-	else if (driverName == S("SoftwareDriver"))
+	else if (driverFlag == E_SoftwareDriver)
 	{
 		return new SoftwareDriver(window);
 	} 
@@ -65,8 +77,7 @@ RenderBase *Graphics::GetDriver()
 
 bool Graphics::Startup()
 {
-	currentDriver->StartupRender();
-	return true;
+	return currentDriver->StartupRender(); 
 }
 
 bool Graphics::Shutdown()
@@ -76,31 +87,33 @@ bool Graphics::Shutdown()
 }
 
 void Graphics::Swap()
-{
-	//currentDriver->BeginFrame();
-	//currentDriver->EndFrame();
+{ 
 	currentDriver->Present();
 }
 
-void Graphics::BeginFrame()
+bool Graphics::BeginFrame()
 {
 	if (currentDriver != nullptr)
 	{
-		currentDriver->BeginFrame();
+		return currentDriver->BeginFrame();
 	}
+
+	return false;
 }
 
-void Graphics::EndFrame()
+bool Graphics::EndFrame()
 {
 	if (currentDriver != nullptr)
 	{
-		currentDriver->EndFrame();
+		return currentDriver->EndFrame();
 	}
+
+	return false;
 }
 
 void Graphics::ResetDefaultDriver()
 {
-	currentDriver = LoadDriver(gDriverPriority[0]);
+	currentDriver = LoadDriver();
 }
 
 void Graphics::Draw(Drawable* drawable)

@@ -69,7 +69,7 @@ protected:
 
 GameAppDelegate::GameAppDelegate()
 {
-	app = new XIRE::Application();
+	app = new XIRE::Application(S("H"),1920,1080);
 
 	app->ApplicationInitialized += CCallback2(&GameAppDelegate::GameApp_OnApplicationInitialized);
 	app->ApplicationRender += CCallback2(&GameAppDelegate::GameApp_OnApplicationRender);
@@ -113,7 +113,7 @@ void GameAppDelegate::Mesh_OnMouseMove(void *sender, MouseEventArgs e)
 		return;
 
 	XIRE::Window *wnd = (XIRE::Window *)(mesh->Parent);
-	wnd->getCamera()->Rotate(0.f, 0.f, 0.3f);
+	//wnd->getCamera()->Rotate(0.f, 0.f, 0.3f);
 } 
 
 void GameAppDelegate::GameApp_OnMeshKeyDown(void *sender, KeyEventArgs e)

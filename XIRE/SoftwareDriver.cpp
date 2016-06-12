@@ -4,7 +4,7 @@
 #include "SoftwareDriver.h"
 #include "SwRenderPrimitive.hpp"
 #include "Transform.h"
-#include "Camera.h"
+#include "SwCamera.h"
 #include <math.h>
 
 NS_Using(XIRE)
@@ -26,7 +26,7 @@ SoftwareDriver::~SoftwareDriver()
 	SafeDelete(rasterizer); 
 }
 
-void SoftwareDriver::BeginFrame()
+bool SoftwareDriver::BeginFrame()
 {
 	/*
 	if (d3ddev != nullptr)
@@ -35,9 +35,11 @@ void SoftwareDriver::BeginFrame()
 		d3ddev->BeginScene();
 	}
 	*/
+
+	return true;
 }
 
-void SoftwareDriver::EndFrame() 
+bool SoftwareDriver::EndFrame() 
 {
 	D3DLOCKED_RECT rect;
 	memset(&rect, 0, sizeof(rect));
@@ -47,7 +49,7 @@ void SoftwareDriver::EndFrame()
 	if (FAILED(r))
 	{
 		//Error log
-		return;
+		return false;
 	}
 
 	void *backBuffer = rect.pBits;
@@ -82,6 +84,8 @@ void SoftwareDriver::EndFrame()
 	backSurface->UnlockRect();
 	 
 	Clear();
+
+	return true;
 } 
 
 void SoftwareDriver::Translate(
@@ -95,7 +99,7 @@ void SoftwareDriver::Translate(
 	//U8 *renderVBuffer = (U8*)MemoryPool::Get()._mm_malloc_16byte(sizeof(SwRenderPrimitive)*vertex->count, 16);
 
 	std::vector<SwRenderPrimitive *> *renderList = new std::vector<SwRenderPrimitive*>();
-	Camera *cam = this->window->getCamera();
+	SwCamera *cam = (SwCamera*)this->window->getCamera();
 
 	for (int i = 0; i < vertex->count; ++i)
 	{ 

@@ -82,16 +82,12 @@
     <ClInclude Include="Vectorf4.h">
       <Filter>core\math</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="SwRenderPrimitive.hpp">
       <Filter>renderer\software</Filter>
     </ClInclude>
-    <ClInclude Include="Viewport.h" />
     <ClInclude Include="Transform.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -102,6 +98,21 @@
       <Filter>renderer\d3d9</Filter>
     </ClInclude>
     <ClInclude Include="Callable.h" />
+    <ClInclude Include="ICamera.hpp">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SwCamera.h">
+      <Filter>renderer\software</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D9Camera.h">
+      <Filter>renderer\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D9VertexBuffer.h">
+      <Filter>renderer\d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuObject.h">
+      <Filter>renderer\d3d9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -139,13 +150,9 @@
     <ClCompile Include="Vector4f.cpp">
       <Filter>core\math</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="Transform.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -156,6 +163,18 @@
       <Filter>renderer\d3d9</Filter>
     </ClCompile>
     <ClCompile Include="Callable.cpp" />
+    <ClCompile Include="SwCamera.cpp">
+      <Filter>renderer\software</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D9Camera.cpp">
+      <Filter>renderer\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D9VertexBuffer.cpp">
+      <Filter>renderer\d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="GpuObject.cpp">
+      <Filter>renderer\d3d9</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="renderer">
